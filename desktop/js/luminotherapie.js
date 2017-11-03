@@ -35,7 +35,7 @@ $("body").on('change', ".eqLogicAttr[data-l2key=DawnSimulatorEngineType]", funct
 	$.ajax({
 		type: 'POST',
 			async:true,
-		url: 'plugins/teleinfo/core/ajax/teleinfo.ajax.php',
+		url: 'plugins/luminotherapie/core/ajax/luminotherapie.ajax.php',
 		data: {
 			action:'SimulaitonPoint',
 			DawnSimulatorEngineType:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineType]").val(),
