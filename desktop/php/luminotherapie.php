@@ -200,7 +200,7 @@ $eqLogics = eqLogic::byType('luminotherapie');
 					</form>
 				</div>
 				<div class="col-lg-6">	
-					<legend>Puissance</legend>
+					<legend>Graphique</legend>
 					<div id='GraphSim'></div>
 				</div>
 			</div>
