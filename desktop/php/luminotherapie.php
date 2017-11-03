@@ -40,7 +40,7 @@ $eqLogics = eqLogic::byType('luminotherapie');
 					}
 					echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
 					echo "<center>";
-					echo '<img src="plugins/luminotherapie/doc/images/luminotherapie_icon.png" height="105" width="95" />';
+					echo '<img src="plugins/luminotherapie/plugin_info/luminotherapie_icon.png" height="105" width="95" />';
 					echo "</center>";
 					echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
 					echo '</div>';
@@ -70,127 +70,140 @@ $eqLogics = eqLogic::byType('luminotherapie');
 		</ul>
 		<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
 			<div role="tabpanel" class="tab-pane active" id="eqlogictab">
-				<form class="form-horizontal">
-					<fieldset>
-						<div class="form-group ">
-							<label class="col-sm-2 control-label">{{Nom}}
-								<sup>
-									<i class="fa fa-question-circle tooltips" title="Indiquer le nom de votre réveil" style="font-size : 1em;color:grey;"></i>
-								</sup>
-							</label>
-							<div class="col-sm-5">
-								<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-								<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom du groupe de zones}}"/>
+				<div class="col-lg-6">
+					<legend>Général</legend>
+					<form class="form-horizontal">
+						<fieldset>
+							<div class="form-group ">
+								<label class="col-sm-2 control-label">{{Nom}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Indiquer le nom de votre réveil" style="font-size : 1em;color:grey;"></i>
+									</sup>
+								</label>
+								<div class="col-sm-5">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
+									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom du groupe de zones}}"/>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" >{{Objet parent}}
-								<sup>
-									<i class="fa fa-question-circle tooltips" title="Indiquer l'objet dans lequel le widget de ce réveil apparaîtra sur le dashboard" style="font-size : 1em;color:grey;"></i>
-								</sup>
-							</label>
-							<div class="col-sm-5">
-								<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
-									<option value="">{{Aucun}}</option>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" >{{Objet parent}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Indiquer l'objet dans lequel le widget de ce réveil apparaîtra sur le dashboard" style="font-size : 1em;color:grey;"></i>
+									</sup>
+								</label>
+								<div class="col-sm-5">
+									<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
+										<option value="">{{Aucun}}</option>
+										<?php
+											foreach (object::all() as $object) 
+												echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">
+									{{Catégorie}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Choisissez une catégorie
+									Cette information n'est pas obligatoire mais peut être utile pour filtrer les widgets" style="font-size : 1em;color:grey;"></i>
+									</sup>
+								</label>
+								<div class="col-md-8">
 									<?php
-										foreach (object::all() as $object) 
-											echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
+									foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
+										echo '<label class="checkbox-inline">';
+										echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
+										echo '</label>';
+									}
 									?>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-2 control-label">
-								{{Catégorie}}
-								<sup>
-									<i class="fa fa-question-circle tooltips" title="Choisissez une catégorie
-								Cette information n'est pas obligatoire mais peut être utile pour filtrer les widgets" style="font-size : 1em;color:grey;"></i>
-								</sup>
-							</label>
-							<div class="col-md-8">
-								<?php
-								foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
-									echo '<label class="checkbox-inline">';
-									echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
-									echo '</label>';
-								}
-								?>
 
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" >
-								{{Etat du widget}}
-								<sup>
-									<i class="fa fa-question-circle tooltips" title="Choisissez les options de visibilité et d'activation
-								Si l'équipement n'est pas activé il ne sera pas utilisable dans Jeedom, mais visible sur le dashboard
-								Si l'équipement n'est pas visible il sera caché sur le dashboard, mais utilisable dans Jeedom" style="font-size : 1em;color:grey;"></i>
-								</sup>
-							</label>
-							<div class="col-sm-5">
-								<label>{{Activer}}</label>
-								<input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="isEnable"/>
-								<label>{{Visible}}</label>
-								<input type="checkbox" class="eqLogicAttr" data-label-text="{{Visible}}" data-l1key="isVisible"/>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" >
+									{{Etat du widget}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Choisissez les options de visibilité et d'activation
+									Si l'équipement n'est pas activé il ne sera pas utilisable dans Jeedom, mais visible sur le dashboard
+									Si l'équipement n'est pas visible il sera caché sur le dashboard, mais utilisable dans Jeedom" style="font-size : 1em;color:grey;"></i>
+									</sup>
+								</label>
+								<div class="col-sm-5">
+									<label>{{Activer}}</label>
+									<input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="isEnable"/>
+									<label>{{Visible}}</label>
+									<input type="checkbox" class="eqLogicAttr" data-label-text="{{Visible}}" data-l1key="isVisible"/>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{{Point de lumiere varriable}}
-								<sup>
-									<i class="fa fa-question-circle tooltips" title="Type de simulation"></i>
-								</sup>
-							</label>
-							<div class="col-md-8 input-group">
-								<input class="eqLogicAttr form-control input-sm cmdAction" data-l1key="configuration" data-l2key="DawnSimulatorCmd"/>
-								<span class="input-group-btn">
-									<a class="btn btn-success btn-sm listCmdAction data-type="action">
-										<i class="fa fa-list-alt"></i>
-									</a>
-								</span>
+						</fieldset>
+					</form>
+				</div>			       
+				<div class="col-lg-6">
+					<legend>Simulation</legend>
+						<form class="form-horizontal">
+							<fieldset>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">{{Point de lumiere varriable}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Type de simulation"></i>
+									</sup>
+								</label>
+								<div class="col-md-8 input-group">
+									<input class="eqLogicAttr form-control input-sm cmdAction" data-l1key="configuration" data-l2key="DawnSimulatorCmd"/>
+									<span class="input-group-btn">
+										<a class="btn btn-success btn-sm listCmdAction data-type="action">
+											<i class="fa fa-list-alt"></i>
+										</a>
+									</span>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{{Type de simulation}}
-								<sup>
-									<i class="fa fa-question-circle tooltips" title="Type de simulation"></i>
-								</sup>
-							</label>
-							<div class="col-md-8 input-group">
-								<select class="eqLogicAttr" data-l1key="configuration" data-l2key="DawnSimulatorEngineType">')
-									<option value="Linear">	{{Linear}}</option>
-									<option value="InQuad">{{InQuad}}</option>
-									<option value="InOutQuad">{{InOutQuad}}</option>
-									<option value="InOutExpo">{{InOutExpo}}</option>
-									<option value="OutInExpo">{{OutInExpo}}</option>
-									<option value="InExpo">{{InExpo}}</option>
-									<option value="OutExpo">{{OutExpo}}</option>
-								</select>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">{{Type de simulation}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Type de simulation"></i>
+									</sup>
+								</label>
+								<div class="col-md-8 input-group">
+									<select class="eqLogicAttr" data-l1key="configuration" data-l2key="DawnSimulatorEngineType">')
+										<option value="Linear">	{{Linear}}</option>
+										<option value="InQuad">{{InQuad}}</option>
+										<option value="InOutQuad">{{InOutQuad}}</option>
+										<option value="InOutExpo">{{InOutExpo}}</option>
+										<option value="OutInExpo">{{OutInExpo}}</option>
+										<option value="InExpo">{{InExpo}}</option>
+										<option value="OutExpo">{{OutExpo}}</option>
+									</select>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{{Valeur d\'arret de la simulation}}
-								<sup>
-									<i class="fa fa-question-circle tooltips" title="Valeur d\'arret de la simulation (100 par defaut)"></i>
-								</sup>
-							</label>
-							<div class="col-md-8 input-group">
-								<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DawnSimulatorEngineEndValue" placeholder="{{Valeur d\'arret de la simulation (100 par defaut)}}"/>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">{{Valeur d\'arret de la simulation}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Valeur d\'arret de la simulation (100 par defaut)"></i>
+									</sup>
+								</label>
+								<div class="col-md-8 input-group">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DawnSimulatorEngineEndValue" placeholder="{{Valeur d\'arret de la simulation (100 par defaut)}}"/>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{{Durée de la simulation}}
-								<sup>
-									<i class="fa fa-question-circle tooltips" title="Durée de la simulation"></i>
-								</sup>
-							</label>
-							<div class="col-md-8 input-group">
-							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DawnSimulatorEngineDuration" placeholder="{{Durée de la simulation}}"/>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">{{Durée de la simulation}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Durée de la simulation"></i>
+									</sup>
+								</label>
+								<div class="col-md-8 input-group">
+								<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DawnSimulatorEngineDuration" placeholder="{{Durée de la simulation}}"/>
+								</div>
 							</div>
-						</div>
-						</div>
-					</fieldset>
-				</form>
-			</div>		
+						</fieldset>
+					</form>
+				</div>
+				<div class="col-lg-6">	
+					<legend>Puissance</legend>
+					<div id='GraphSim'></div>
+				</div>
+			</div>
 			<div role="tabpanel" class="tab-pane" id="commandtab">	
 				<table id="table_cmd" class="table table-bordered table-condensed">
 				    <thead>
