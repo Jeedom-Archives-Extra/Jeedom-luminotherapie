@@ -32,16 +32,34 @@ $("body").on('click', ".listCmdAction", function() {
 });
 
 $("body").on('change', ".eqLogicAttr[data-l2key=DawnSimulatorEngineType]", function() {
-	var Series = [{
-		step: true,
-		name: '{{Simulation}}',
-		data: 0,
-		type: 'line',
-		tooltip: {
-			valueDecimals: 2
+	$.ajax({
+		type: 'POST',
+			async:true,
+		url: 'plugins/teleinfo/core/ajax/teleinfo.ajax.php',
+		data: {
+			action:'SimulaitonPoint',
+			DawnSimulatorEngineType:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineType]").val(),
+			DawnSimulatorEngineStartValue:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineStartValue]").val(),
+			DawnSimulatorEngineEndValue:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineEndValue]").val(),
+			DawnSimulatorEngineDuration:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineDuration]").val()
+			},
+		dataType: 'json',
+		error: function (request, status, error) {
+		    handleAjaxError(request, status, error);
 		},
-	}];
-	drawSimpleGraph($('#GraphSim'), Series);
+		success: function (data) {		
+			var Series = [{
+				step: true,
+				name: '{{Simulation}}',
+				data: data.result,
+				type: 'line',
+				tooltip: {
+					valueDecimals: 2
+				},
+			}];
+			drawSimpleGraph($('#GraphSim'), Series);
+		}
+	});
 });
 function drawSimpleGraph(_el, _serie) {
     var legend = {
