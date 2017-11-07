@@ -76,7 +76,7 @@ class luminotherapie extends eqLogic {
 			$cmd=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorCmd')));
 			if(is_object($cmd)){
 				while(true){
-					$options['slider'] = ceil($luminotherapie->dawnSimulatorEngine(
+					$options['slider'] = ceil(self::dawnSimulatorEngine(
 						$luminotherapie->getConfiguration('DawnSimulatorEngineType'),
 						$time,
 						$luminotherapie->getConfiguration('DawnSimulatorEngineStartValue'), 
@@ -97,7 +97,7 @@ class luminotherapie extends eqLogic {
 		}
 		
 	}
-	public function dawnSimulatorEngine($type, $time, $startValue, $endValue, $duration) {
+	public static function dawnSimulatorEngine($type, $time, $startValue, $endValue, $duration) {
 		if($startValue=='')
 			$startValue=0;
 		if($endValue=='')
