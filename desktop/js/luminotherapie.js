@@ -62,10 +62,13 @@ function UpdateGraphSim() {
 		},
 		success: function (data) {		
 			var Series = [{
-				step: true,
+				step: false,
 				name: '{{Simulation}}',
 				data: data.result,
 				type: 'line',
+				marker: {
+					enabled: false
+				},
 				tooltip: {
 					valueDecimals: 2
 				},
@@ -99,6 +102,9 @@ function drawSimpleGraph(_el, _serie) {
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
             valueDecimals: 2,
         },
+	legend: {
+		enabled:false
+	},
         yAxis: {
             format: '{value}',
             showEmpty: false,
