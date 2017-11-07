@@ -70,19 +70,15 @@ function UpdateGraphSim() {
 					valueDecimals: 2
 				},
 			}];
-			drawSimpleGraph($('#GraphSim'), Series);
+			drawSimpleGraph('GraphSim', Series);
 		}
 	});
 }
 function drawSimpleGraph(_el, _serie) {
-    var legend = {
-        enabled: true,
-        borderColor: 'black',
-        borderWidth: 2,
-        shadow: true
-    };
-
-    new Highcharts.StockChart({
+    new Highcharts.chart({
+      	title:{
+          text:"Simulation"
+        },
         chart: {
             zoomType: 'x',
             renderTo: _el,
@@ -99,40 +95,6 @@ function drawSimpleGraph(_el, _serie) {
         navigator: {
             enabled: false
         },
-        rangeSelector: {
-            buttons: [{
-                    type: 'minute',
-                    count: 30,
-                    text: '30m'
-                }, {
-                    type: 'hour',
-                    count: 1,
-                    text: 'H'
-                }, {
-                    type: 'day',
-                    count: 1,
-                    text: 'J'
-                }, {
-                    type: 'week',
-                    count: 1,
-                    text: 'S'
-                }, {
-                    type: 'month',
-                    count: 1,
-                    text: 'M'
-                }, {
-                    type: 'year',
-                    count: 1,
-                    text: 'A'
-                }, {
-                    type: 'all',
-                    count: 1,
-                    text: 'Tous'
-                }],
-            selected: 6,
-            inputEnabled: false
-        },
-        legend: legend,
         tooltip: {
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
             valueDecimals: 2,
@@ -146,17 +108,6 @@ function drawSimpleGraph(_el, _serie) {
                 align: 'right',
                 x: -5
             }
-        },
-        scrollbar: {
-            barBackgroundColor: 'gray',
-            barBorderRadius: 7,
-            barBorderWidth: 0,
-            buttonBackgroundColor: 'gray',
-            buttonBorderWidth: 0,
-            buttonBorderRadius: 7,
-            trackBackgroundColor: 'none', trackBorderWidth: 1,
-            trackBorderRadius: 8,
-            trackBorderColor: '#CCC'
         },
         series: _serie
     });
