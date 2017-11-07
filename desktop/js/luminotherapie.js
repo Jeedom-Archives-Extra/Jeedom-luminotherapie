@@ -30,18 +30,31 @@ $("body").on('click', ".listCmdAction", function() {
 		el.value(result.human);
 	});
 });
-
 $("body").on('change', ".eqLogicAttr[data-l2key=DawnSimulatorEngineType]", function() {
+	UpdateGraphSim();
+});
+$("body").on('change', ".eqLogicAttr[data-l2key=DawnSimulatorEngineEndValue]", function() {
+	UpdateGraphSim();
+});
+$("body").on('change', ".eqLogicAttr[data-l2key=DawnSimulatorEngineDuration]", function() {
+	UpdateGraphSim();
+});
+function UpdateGraphSim() {
+	var DawnSimulatorEngineType=$(".eqLogicAttr[data-l2key=DawnSimulatorEngineType]").val();
+	var DawnSimulatorEngineEndValue=$(".eqLogicAttr[data-l2key=DawnSimulatorEngineEndValue]").val();
+	var DawnSimulatorEngineDuration=$(".eqLogicAttr[data-l2key=DawnSimulatorEngineDuration]").val();
+	if(DawnSimulatorEngineDuration == '' ||DawnSimulatorEngineEndValue == '' || DawnSimulatorEngineType == '')
+    		return;
 	$.ajax({
 		type: 'POST',
 			async:true,
 		url: 'plugins/luminotherapie/core/ajax/luminotherapie.ajax.php',
 		data: {
 			action:'SimulaitonPoint',
-			DawnSimulatorEngineType:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineType]").val(),
+			DawnSimulatorEngineType:DawnSimulatorEngineType,
 			DawnSimulatorEngineStartValue:0,
-			DawnSimulatorEngineEndValue:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineEndValue]").val(),
-			DawnSimulatorEngineDuration:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineDuration]").val()
+			DawnSimulatorEngineEndValue:DawnSimulatorEngineEndValue,
+			DawnSimulatorEngineDuration:DawnSimulatorEngineDuration.val()
 			},
 		dataType: 'json',
 		error: function (request, status, error) {
@@ -60,7 +73,7 @@ $("body").on('change', ".eqLogicAttr[data-l2key=DawnSimulatorEngineType]", funct
 			drawSimpleGraph($('#GraphSim'), Series);
 		}
 	});
-});
+}
 function drawSimpleGraph(_el, _serie) {
     var legend = {
         enabled: true,
