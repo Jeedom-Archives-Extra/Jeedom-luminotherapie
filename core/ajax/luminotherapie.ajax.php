@@ -7,7 +7,7 @@
 		}
 		if (init('action') == 'SimulaitonPoint') {		
 			$point=null;
-			for($time=init('DawnSimulatorEngineStartValue');$time<=init('DawnSimulatorEngineEndValue');$time++){
+			for($time=init('DawnSimulatorEngineStartValue');$time<=init('DawnSimulatorEngineDuration');$time++){
 				$point[] = ceil(luminotherapie::dawnSimulatorEngine(
 					init('DawnSimulatorEngineType'),
 					$time,
