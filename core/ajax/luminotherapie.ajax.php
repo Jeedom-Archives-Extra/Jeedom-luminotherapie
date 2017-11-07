@@ -16,7 +16,7 @@
 					init('DawnSimulatorEngineDuration')
 				)),$time);
 			}
-			ajax::success(json_encode($point));		
+			ajax::success($point);		
 		}
 		throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 		/*     * *********Catch exeption*************** */
