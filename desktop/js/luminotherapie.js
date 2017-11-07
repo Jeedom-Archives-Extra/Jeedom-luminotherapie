@@ -54,7 +54,7 @@ function UpdateGraphSim() {
 			DawnSimulatorEngineType:DawnSimulatorEngineType,
 			DawnSimulatorEngineStartValue:0,
 			DawnSimulatorEngineEndValue:DawnSimulatorEngineEndValue,
-			DawnSimulatorEngineDuration:DawnSimulatorEngineDuration.val()
+			DawnSimulatorEngineDuration:DawnSimulatorEngineDuration
 			},
 		dataType: 'json',
 		error: function (request, status, error) {
