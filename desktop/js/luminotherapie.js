@@ -39,7 +39,7 @@ $("body").on('change', ".eqLogicAttr[data-l2key=DawnSimulatorEngineType]", funct
 		data: {
 			action:'SimulaitonPoint',
 			DawnSimulatorEngineType:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineType]").val(),
-			DawnSimulatorEngineStartValue:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineStartValue]").val(),
+			DawnSimulatorEngineStartValue:0,
 			DawnSimulatorEngineEndValue:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineEndValue]").val(),
 			DawnSimulatorEngineDuration:$(".eqLogicAttr[data-l2key=DawnSimulatorEngineDuration]").val()
 			},
