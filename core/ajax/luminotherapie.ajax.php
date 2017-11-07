@@ -8,13 +8,13 @@
 		if (init('action') == 'SimulaitonPoint') {		
 			$point=null;
 			for($time=init('DawnSimulatorEngineStartValue');$time<=init('DawnSimulatorEngineEndValue');$time++){
-				$point[] = array(ceil(luminotherapie::dawnSimulatorEngine(
+				$point[] = ceil(luminotherapie::dawnSimulatorEngine(
 					init('DawnSimulatorEngineType'),
 					$time,
 					init('DawnSimulatorEngineStartValue'), 
 					init('DawnSimulatorEngineEndValue'), 
 					init('DawnSimulatorEngineDuration')
-				)),$time);
+				));
 			}
 			ajax::success($point);		
 		}
