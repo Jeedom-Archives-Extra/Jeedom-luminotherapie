@@ -21,7 +21,7 @@ class luminotherapie extends eqLogic {
 			return;
 		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
 			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
-			if(is_object($cron) && !$cron->running())
+			if(is_object($cron) && !$cron->running()){
 				$cron->start();
 				$cron->run();
 			}
