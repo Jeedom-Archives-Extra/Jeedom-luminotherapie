@@ -6,21 +6,36 @@ class luminotherapie extends eqLogic {
 		$return['log'] = 'luminotherapie';
 		$return['launchable'] = 'ok';
 		$return['state'] = 'ok';
-		
+		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
+			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
+			if(is_object($cron) && !$cron->running())
+				$return['state'] = 'nok';
+		}
 		return $return;
 	}
 	public static function deamon_start($_debug = false) {
-		log::remove('luminotherapie');
-		self::deamon_stop();
 		$deamon_info = self::deamon_info();
 		if ($deamon_info['launchable'] != 'ok') 
 			return;
 		if ($deamon_info['state'] == 'ok') 
 			return;
+		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
+			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
+			if(is_object($cron) && !$cron->running())
+				$cron->start();
+				$cron->run();
+			}
+		}
 		
 	}
 	public static function deamon_stop() {	
-		
+		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
+			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
+			if(is_object($cron))
+				$cron->stop();
+				$cron->remove();
+			}
+		}		
 	}
 	public function postSave() {
 		$this->AddCommande('Démarrage','start',"action", 'other',1);
@@ -47,15 +62,16 @@ class luminotherapie extends eqLogic {
 	}
 	public function startSimulAubeDemon(){
 		$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $this->getId()));
-		if (!is_object($cron)) 
+		if (!is_object($cron)) {
 			$cron = new cron();
-		$cron->setClass('luminotherapie');
-		$cron->setFunction('SimulAubeDemon');
-		$cron->setDeamon(1);
-		$cron->setOption(array('id' => $this->getId()));
-		$cron->setEnable(1);
-		$cron->setSchedule('* * * * * *');
-		$cron->save();
+			$cron->setClass('luminotherapie');
+			$cron->setFunction('SimulAubeDemon');
+			$cron->setDeamon(1);
+			$cron->setOption(array('id' => $this->getId()));
+			$cron->setEnable(1);
+			$cron->setSchedule('* * * * * *');
+			$cron->save();
+		}
 		$cron->start();
 		$cron->run();
 	}
