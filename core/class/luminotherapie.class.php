@@ -31,7 +31,7 @@ class luminotherapie extends eqLogic {
 	public static function deamon_stop() {	
 		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
 			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
-			if(is_object($cron))
+			if(is_object($cron)){
 				$cron->stop();
 				$cron->remove();
 			}
