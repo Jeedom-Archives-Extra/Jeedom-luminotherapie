@@ -72,7 +72,6 @@ class luminotherapie extends eqLogic {
 			$cron->setSchedule('* * * * * *');
 			$cron->save();
 		}
-		sleep(1);
 		$cron->start();
 		$cron->run();
 	}
