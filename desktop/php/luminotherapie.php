@@ -141,8 +141,8 @@ $eqLogics = eqLogic::byType('luminotherapie');
 				</div>			       
 				<div class="col-lg-6">
 					<legend>Simulation</legend>
-						<form class="form-horizontal">
-							<fieldset>
+					<form class="form-horizontal">
+						<fieldset>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">{{Point de lumiere varriable}}
 									<sup>
@@ -165,7 +165,7 @@ $eqLogics = eqLogic::byType('luminotherapie');
 									</sup>
 								</label>
 								<div class="col-md-8 input-group">
-									<select class="eqLogicAttr" data-l1key="configuration" data-l2key="DawnSimulatorEngineType">')
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DawnSimulatorEngineType">')
 										<option value="Linear">	{{Linear}}</option>
 										<option value="InQuad">{{InQuad}}</option>
 										<option value="InOutQuad">{{InOutQuad}}</option>
