@@ -103,12 +103,13 @@ class luminotherapie extends eqLogic {
 					$luminotherapie->getConfiguration('DawnSimulatorEngineDuration')
 				));
 				$Value=$options['slider']*100/$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue');
+				$options['color']=$luminotherapie->changeColor($Value);
 				log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$options['slider'].'/'.$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue')." - durée : ".$time."/".$luminotherapie->getConfiguration('DawnSimulatorEngineDuration'));
 				$time++;
 				if(is_object($cmdSlide))
 					$cmdSlide->Execute($options);
 				if(is_object($cmdRGB))
-					$cmdRGB->Execute({'color'=>$luminotherapie->changeColor($Value)});
+					$cmdRGB->Execute($options);
 				if($options['slider'] == $luminotherapie->getConfiguration('DawnSimulatorEngineEndValue') || ($time - 1) == $luminotherapie->getConfiguration('DawnSimulatorEngineDuration')){
 					$luminotherapie->removeSimulAubeDemon($_option);
 					return;
@@ -186,7 +187,7 @@ class luminotherapie extends eqLogic {
 			$g=255*(1-$Value);
 			$b=255*$Value;
 		}
-		retrun $this->rgb2html($r, $g=-1, $b=-1);
+		retrun $this->rgb2html($r, $g, $b);
 	}
 	private function html2rgb($color){
 		if ($color[0] == '#')
