@@ -144,13 +144,28 @@ $eqLogics = eqLogic::byType('luminotherapie');
 					<form class="form-horizontal">
 						<fieldset>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">{{Point de lumiere varriable}}
+								<label class="col-sm-2 control-label">{{Lumiere variable}}
 									<sup>
-										<i class="fa fa-question-circle tooltips" title="Type de simulation"></i>
+										<i class="fa fa-question-circle tooltips" title="Objet de variation de la lumiere"></i>
 									</sup>
 								</label>
 								<div class="col-md-8 input-group">
 									<input class="eqLogicAttr form-control input-sm cmdAction" data-l1key="configuration" data-l2key="DawnSimulatorCmd"/>
+									<span class="input-group-btn">
+										<a class="btn btn-success btn-sm listCmdAction data-type="action">
+											<i class="fa fa-list-alt"></i>
+										</a>
+									</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">{{Couleur de lumière varriable}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Objet de commande de la couleur"></i>
+									</sup>
+								</label>
+								<div class="col-md-8 input-group">
+									<input class="eqLogicAttr form-control input-sm cmdAction" data-l1key="configuration" data-l2key="DawnSimulatorColorCmd"/>
 									<span class="input-group-btn">
 										<a class="btn btn-success btn-sm listCmdAction data-type="action">
 											<i class="fa fa-list-alt"></i>
