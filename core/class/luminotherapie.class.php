@@ -178,7 +178,7 @@ class luminotherapie extends eqLogic {
 		//$r 0% = 255; 50% = 0 ;100% = 0
 		//$g 0% = 0; 50% = 255 ;100% = 0
 		//$b 0% = 0; 50% = 0 ;100% = 255
-		if($Value<50){
+		if($Value > 50){
 			$r=255*(1-$Value);
 			$g=255*$Value;
 			$b=0;
@@ -187,7 +187,7 @@ class luminotherapie extends eqLogic {
 			$g=255*(1-$Value);
 			$b=255*$Value;
 		}
-		retrun $this->rgb2html($r, $g, $b);
+		return $this->rgb2html($r, $g, $b);
 	}
 	private function html2rgb($color){
 		if ($color[0] == '#')
