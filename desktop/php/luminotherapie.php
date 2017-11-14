@@ -159,7 +159,7 @@ $eqLogics = eqLogic::byType('luminotherapie');
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">{{Couleur de lumière varriable}}
+								<label class="col-sm-2 control-label">{{Couleur de lumière variable}}
 									<sup>
 										<i class="fa fa-question-circle tooltips" title="Objet de commande de la couleur"></i>
 									</sup>
@@ -202,9 +202,9 @@ $eqLogics = eqLogic::byType('luminotherapie');
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">{{Durée de la simulation}}
+								<label class="col-sm-2 control-label">{{Durée de la simulation (min)}}
 									<sup>
-										<i class="fa fa-question-circle tooltips" title="Durée de la simulation"></i>
+										<i class="fa fa-question-circle tooltips" title="Durée de la simulation en minute"></i>
 									</sup>
 								</label>
 								<div class="col-md-8 input-group">
