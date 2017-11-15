@@ -102,7 +102,7 @@ class luminotherapie extends eqLogic {
 					$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue'), 
 					$luminotherapie->getConfiguration('DawnSimulatorEngineDuration')
 				));
-				$Value=$slider*100/$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue');
+				$Value=$slider/$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue');
 				$color=$luminotherapie->changeColor($Value);
 				$time++;
 				if(is_object($cmdSlide)){
@@ -181,7 +181,7 @@ class luminotherapie extends eqLogic {
 		//$r 0% = 255; 50% = 0 ;100% = 0
 		//$g 0% = 0; 50% = 255 ;100% = 0
 		//$b 0% = 0; 50% = 0 ;100% = 255
-		if($Value > 50){
+		if($Value > 0.5){
 			$r=255*$Value;
 			$g=255*(1-$Value);
 			$b=0;
