@@ -144,7 +144,7 @@ $eqLogics = eqLogic::byType('luminotherapie');
 					<form class="form-horizontal">
 						<fieldset>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">{{Lumiere variable}}
+								<label class="col-sm-2 control-label">{{Commande de variation de la lumiére}}
 									<sup>
 										<i class="fa fa-question-circle tooltips" title="Objet de variation de la lumiere"></i>
 									</sup>
@@ -159,7 +159,7 @@ $eqLogics = eqLogic::byType('luminotherapie');
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">{{Couleur de lumière variable}}
+								<label class="col-sm-2 control-label">{{Commande de variation de la couleur}}
 									<sup>
 										<i class="fa fa-question-circle tooltips" title="Objet de commande de la couleur"></i>
 									</sup>
@@ -192,9 +192,9 @@ $eqLogics = eqLogic::byType('luminotherapie');
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">{{Valeur d\'arret de la simulation}}
+								<label class="col-sm-2 control-label">{{Valeur maximal de la variation}}
 									<sup>
-										<i class="fa fa-question-circle tooltips" title="Valeur d\'arret de la simulation (100 par defaut)"></i>
+										<i class="fa fa-question-circle tooltips" title="Valeur maximal de la variation (100 par defaut)"></i>
 									</sup>
 								</label>
 								<div class="col-md-8 input-group">
