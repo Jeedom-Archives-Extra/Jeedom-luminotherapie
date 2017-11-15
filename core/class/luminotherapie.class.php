@@ -182,13 +182,13 @@ class luminotherapie extends eqLogic {
 		//$g 0% = 0; 50% = 255 ;100% = 0
 		//$b 0% = 0; 50% = 0 ;100% = 255
 		if($Value > 50){
-			$r=255*(1-$Value);
-			$g=255*$Value;
+			$r=255*$Value;
+			$g=255*(1-$Value);
 			$b=0;
 		}else{
-			$br=0;
-			$g=255*(1-$Value);
-			$b=255*$Value;
+			$r=0;
+			$g=255*$Value;
+			$b=255*(1-$Value);
 		}
 		return $this->rgb2html($r, $g, $b);
 	}
