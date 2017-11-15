@@ -159,9 +159,9 @@ class luminotherapie extends eqLogic {
 			break;
 			case 'OutInExpo':
 				if ($time < $duration / 2)
-					return self::equations('OutExpo', $time * 2, $startValue, $endValue / 2, $duration);
+					return self::dawnSimulatorEngine('OutExpo', $time * 2, $startValue, $endValue / 2, $duration);
 				else
-					return self::equations('InExpo', ($time * 2) - $duration, $startValue + $endValue / 2, $endValue / 2, $duration);
+					return self::dawnSimulatorEngine('InExpo', ($time * 2) - $duration, $startValue + $endValue / 2, $endValue / 2, $duration);
 			break;
 			case 'InExpo':
 				if($time == 0)
