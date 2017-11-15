@@ -152,7 +152,7 @@ $eqLogics = eqLogic::byType('luminotherapie');
 								<div class="col-md-8 input-group">
 									<input class="eqLogicAttr form-control input-sm cmdAction" data-l1key="configuration" data-l2key="DawnSimulatorCmd"/>
 									<span class="input-group-btn">
-										<a class="btn btn-success btn-sm listCmdAction data-type="action">
+										<a class="btn btn-success btn-sm listCmdAction" data-type="action">
 											<i class="fa fa-list-alt"></i>
 										</a>
 									</span>
@@ -167,7 +167,7 @@ $eqLogics = eqLogic::byType('luminotherapie');
 								<div class="col-md-8 input-group">
 									<input class="eqLogicAttr form-control input-sm cmdAction" data-l1key="configuration" data-l2key="DawnSimulatorColorCmd"/>
 									<span class="input-group-btn">
-										<a class="btn btn-success btn-sm listCmdAction data-type="action">
+										<a class="btn btn-success btn-sm listCmdAction" data-type="action">
 											<i class="fa fa-list-alt"></i>
 										</a>
 									</span>
