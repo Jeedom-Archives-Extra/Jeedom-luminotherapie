@@ -24,7 +24,7 @@ function addCmdToTable(_cmd) {
 	jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 }
 $("body").on('click', ".listCmdAction", function() {
-	var el = $(this).closest('.form-group').find('input .eqLogicAttr');
+	var el = $(this).closest('.form-group').find('input');
 	jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function (result) {
 		el.value(result.human);
 	});
