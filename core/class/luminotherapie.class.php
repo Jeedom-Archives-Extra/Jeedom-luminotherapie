@@ -86,6 +86,15 @@ class luminotherapie extends eqLogic {
 	public static function SimulAubeDemon($_option){
 		$luminotherapie=eqLogic::byId($_option['id']);
 		if(is_object($luminotherapie)){
+			$StartValue=$luminotherapie->getConfiguration('DawnSimulatorEngineStartValue');
+			if($StartValue=='')
+				$StartValue=0;
+			$EndValue=$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue');
+			if($EndValue=='')
+				$EndValue=100;
+			$Duration=$luminotherapie->getConfiguration('DawnSimulatorEngineDuration');
+			if($Duration=='')
+				$Duration=30;
 			log::add('luminotherapie','info',$luminotherapie->getHumanName().' Lancement de la simulation d\'aube');
 			$time = 0;
 			$cmdSlide=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorCmd')));
@@ -95,25 +104,19 @@ class luminotherapie extends eqLogic {
 			if(is_object($cmdRGB))
 				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
 			while(true){
-				$slider = ceil(self::dawnSimulatorEngine(
-					$luminotherapie->getConfiguration('DawnSimulatorEngineType'),
-					$time,
-					$luminotherapie->getConfiguration('DawnSimulatorEngineStartValue'), 
-					$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue'), 
-					$luminotherapie->getConfiguration('DawnSimulatorEngineDuration')
-				));
-				$Value=$slider/$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue');
+				$slider = ceil(self::dawnSimulatorEngine($luminotherapie->getConfiguration('DawnSimulatorEngineType'),$time,$StartValue, $EndValue, $Duration));
+				$Value=$slider/$EndValue;
 				$color=$luminotherapie->changeColor($Value);
 				$time++;
 				if(is_object($cmdSlide)){
-					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$slider.'/'.$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue')." - durée : ".$time."/".$luminotherapie->getConfiguration('DawnSimulatorEngineDuration'));
+					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$slider.'/'.$EndValue." - durée : ".$time."/".$Duration);
 					$cmdSlide->Execute(array('slider'=>$slider));
 				}
 				if(is_object($cmdRGB)){
 					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$color);
 					$cmdRGB->Execute(array('color'=>$color));
 				}
-				if($slider == $luminotherapie->getConfiguration('DawnSimulatorEngineEndValue') || ($time - 1) == $luminotherapie->getConfiguration('DawnSimulatorEngineDuration')){
+				if($slider == $EndValue || ($time - 1) == $Duration){
 					$luminotherapie->removeSimulAubeDemon($_option);
 					return;
 				}else
