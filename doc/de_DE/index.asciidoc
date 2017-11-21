@@ -1,0 +1,19 @@
+= Luminothérapie
+
+== Description
+Ce plugin permet de créer des similation d'aube
+
+=== Configuration générale Jeedom		
+		
+image::../images/ConfigurationGeneral.jpg[]		
+* Nom  : le nom a déjà été paramétré, mais vous avez la possibilité de le changer.		
+* Objet parent : ce paramètre permet d'ajouter l'équipement dans un objet Jeedom.		
+* Catégorie : déclare l'équipement dans une catégorie.		
+* Visible : permet de rendre l'équipement visible dans le Dashboard.		
+* Activer : permet d'activer l'équipement.		
+
+Configurer les parametres de votre simulation
+* Type de simulateur d'aube : il existe plusieurs types de simulateur d'aube, choisissez celui qui vous convient le mieux.
+* Valeur de démarrage de la simulation : l'intensité lumineuse (%) à laquelle vous voulez lancer la simulation.
+* Valeur d'arrêt de la simulation :  l'intensité lumineuse (%) à laquelle vous voulez arrêter la simulation.
+* Durée de la simulation : sur quelle période voulez-vous activer la simulation.
