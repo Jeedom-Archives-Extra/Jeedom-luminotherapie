@@ -117,8 +117,8 @@ class luminotherapie extends eqLogic {
 					$cmdRGB->Execute(array('color'=>$color));
 				}
 				if($slider == $EndValue || ($time - 1) == $Duration){
-					$luminotherapie->removeSimulAubeDemon($_option);
-					return;
+					$luminotherapie->removeSimulAubeDemon();
+					break;
 				}else
 					sleep(60);
 			}
