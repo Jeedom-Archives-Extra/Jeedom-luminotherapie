@@ -62,7 +62,7 @@ function addSequence(_sequence,_el) {
         
 	$('.parameter').append(div);
 	$('.parameter').find('tr:last').setValues(_sequence, '.expressionAttr');	
-	$('.seq_list').append($('<li>).text(_sequence.name);
+	$('.seq_list').append($('<li>').text(_sequence.name));
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
