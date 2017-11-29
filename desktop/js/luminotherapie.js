@@ -49,7 +49,7 @@ function addSequence(_sequence) {
 	tr.append($('<td>')
 		.append($('<div class="input-group">')
 			.append($('<span class="input-group-btn">')
-				.append($('<a class="btn btn-default conditionAttr btn-sm" data-action="remove">')
+				.append($('<a class="btn btn-default sequenceAttr btn-sm" data-action="remove">')
 					.append($('<i class="fa fa-minus-circle">'))))
 			.append($('<select class="expressionAttr form-control input-sm" data-l1key="expression"/>')
 			       .append($('<option value="constant">')
