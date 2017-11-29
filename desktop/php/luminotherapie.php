@@ -247,21 +247,22 @@ $eqLogics = eqLogic::byType('luminotherapie');
 							</a>
 						</legend>
 					</fieldset>
-				</form>			
-				<div class="col-lg-6">	
-					<legend>Sequence</legend>
-					<ul class="seq_list">
-					</ul>
-				</div>
-				
-				<div class="col-lg-6">	
-					<legend>Parameter</legend>
-					<div class='parameter'></div>
-				</div>
+				</form>		
 				<div>	
 					<legend>Votre simulation</legend>
 					<div id='GraphSim'></div>
-				</div>
+				</div>	
+				<div>	
+					<table id="seq_list" class="table table-bordered table-condensed">
+						<thead>
+							<tr>
+								<th>Type</th>
+								<th>Paramètre</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>	
 			</div>
 		</div>
 	</div>
