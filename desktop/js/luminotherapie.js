@@ -3,7 +3,7 @@ $('#tab_zones a').click(function(e) {
     $(this).tab('show');
 });
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
-$(".parameter").sortable({axis: "y", cursor: "move", items: ".SequenceGroup", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$("#SeqList").sortable({axis: "y", cursor: "move", items: ".SequenceGroup", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 function saveEqLogic(_eqLogic) {
 	_eqLogic.configuration.sequence=new Object();
 	var SequenceArray= new Array();
@@ -43,30 +43,49 @@ function addCmdToTable(_cmd) {
 	$('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');
 	jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 }
-function addSequence(_sequence,_el) {
-	var div = $('<div class="SequenceGroup">')
-			.append($('<div class="input-group">')
-				.append($('<span class="input-group-btn">')
-					.append($('<input type="checkbox" class="expressionAttr" data-l1key="enable" checked/>')))
-				.append($('<span class="input-group-btn">')
-					.append($('<a class="btn btn-default conditionAttr btn-sm" data-action="remove">')
-						.append($('<i class="fa fa-minus-circle">'))))
-				.append($('<input class="expressionAttr form-control input-sm" data-l1key="name"/>'))
-				.append($('<select class="expressionAttr form-control input-sm" data-l1key="expression"/>')
-				       .append($('<option value="rampe">')
-					      .text('{{Rampe}}'))
-				       .append($('<option value="sin">')
-					      .text('{{Sinusoide}}'))
-				       .append($('<option value="carre">')
-					      .text('{{Carré}}'))));
-        
-	$('.parameter').append(div);
-	$('.parameter').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
-	$('.seq_list').append($('<li>').text(_sequence.name));
+function addSequence(_sequence) {
+	var tr = $('<tr class="SequenceGroup">');
+	tr.append($('<td>')
+		  .append($('<input type="checkbox" class="expressionAttr" data-l1key="enable" checked/>')));
+	tr.append($('<td>')
+		.append($('<div class="input-group">')
+			.append($('<span class="input-group-btn">')
+				.append($('<a class="btn btn-default conditionAttr btn-sm" data-action="remove">')
+					.append($('<i class="fa fa-minus-circle">'))))
+			.append($('<select class="expressionAttr form-control input-sm" data-l1key="expression"/>')
+			       .append($('<option value="rampe">')
+				      .text('{{Rampe}}'))
+			       .append($('<option value="sin">')
+				      .text('{{Sinusoide}}'))
+			       .append($('<option value="carre">')
+				      .text('{{Carré}}')))));
+	tr.append(addParameter(_sequence.expression));
+	$('#SeqList tbody').append(tr);
+	$('#SeqList tbody').find('tr:last').setValues(_sequence, '.expressionAttr');	
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
   
+}
+function addParameter(type) {
+	var td=$('<td>');
+	switch (type){
+		case "rampe":
+			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="coef"/>'));
+			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="offset"/>'));
+			break;
+		case "sin":
+			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="frequence"/>'));
+			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="amplitude"/>'));
+			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="offset"/>'));
+			break;
+		case"carre":
+			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="frequence"/>'));
+			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="amplitude"/>'));
+			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="offset"/>'));
+			break;
+	}		
+	return td;
 }
 $('.sequenceAttr[data-action=add]').off().on('click',function(){
 	addSequence({});
