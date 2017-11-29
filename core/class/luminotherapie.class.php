@@ -125,6 +125,31 @@ class luminotherapie extends eqLogic {
 		}
 		
 	}
+	public function Sequences() {
+		$Value=0;
+		foreach($this->getConfiguration('sequence') as $Sequence){
+			for($time=0; $time < $Sequence['duree'];$time++){
+				$Value[]=$this->equation($Sequence, array_pop($Value));
+				//sleep(60);
+			}
+		}
+		return $Value;
+	}
+	public function equation($Sequence, $Value) {
+		switch ($Sequence['expression']){
+			case 'constant':
+				return $Sequence['offset'];
+			break;
+			case 'rampe':
+				return $Value * $Sequence['pente'] + $Sequence['offset'];
+			break;
+			case 'sin':
+				return $Value * sin($Sequence['amplitude']*1/$Sequence['frequance'])  + $Sequence['offset'];
+			break;
+			case 'carre':
+			break;
+		}
+	}
 	public static function dawnSimulatorEngine($type, $time, $startValue, $endValue, $duration) {
 		if($startValue=='')
 			$startValue=0;
