@@ -18,6 +18,12 @@
 			}
 			ajax::success($point);		
 		}
+		if (init('action') == 'getSimulaitonPoint') {	
+			$eqLogic = eqLogic::byId(init('id'));
+			if(is_object($eqLogic))
+				ajax::success($eqLogic->Sequences());	
+			ajax::error("Sequence introuvable");
+		}
 		throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 		/*     * *********Catch exeption*************** */
 	} catch (Exception $e) {
