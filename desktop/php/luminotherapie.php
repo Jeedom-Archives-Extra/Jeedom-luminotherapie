@@ -250,14 +250,15 @@ $eqLogics = eqLogic::byType('luminotherapie');
 				</form>		
 				<div>	
 					<legend>Votre simulation</legend>
-					<div id='GraphSim'></div>
+					<div id='SeqGraph'></div>
 				</div>	
 				<div>	
-					<table id="seq_list" class="table table-bordered table-condensed">
+					<table id="SeqList" class="table table-bordered table-condensed">
 						<thead>
 							<tr>
-								<th>Type</th>
-								<th>Paramètre</th>
+								<th></th>
+								<th>{{Type}}</th>
+								<th>{{Paramètre}}</th>
 							</tr>
 						</thead>
 						<tbody></tbody>
