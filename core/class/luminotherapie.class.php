@@ -127,20 +127,22 @@ class luminotherapie extends eqLogic {
 	}
 	public function Sequences() {
 		foreach($this->getConfiguration('sequence') as $Sequence){
+			if(!$Sequence['enable'])
+				continue;
 			for($time=0; $time < $Sequence['duree'];$time++){
-				$Value[]=$this->equation($Sequence, end($Value));
+				$Value[]=$this->equation($Sequence, $time, end($Value));
 				//sleep(60);
 			}
 		}
 		return $Value;
 	}
-	public function equation($Sequence, $Value) {
+	public function equation($Sequence, $time, $Value) {
 		switch ($Sequence['expression']){
 			case 'constant':
 				return $Sequence['offset'];
 			break;
 			case 'rampe':
-				return $Value * $Sequence['pente'] + $Sequence['offset'];
+				return $Value+ $time * $Sequence['pente'] + $Sequence['offset'];
 			break;
 			case 'sin':
 				return $Value * sin($Sequence['amplitude']*1/$Sequence['frequance'])  + $Sequence['offset'];
