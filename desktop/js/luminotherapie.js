@@ -3,6 +3,26 @@ $('#tab_zones a').click(function(e) {
     $(this).tab('show');
 });
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$(".parameter").sortable({axis: "y", cursor: "move", items: ".SequenceGroup", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+function saveEqLogic(_eqLogic) {
+	_eqLogic.configuration.sequence=new Object();
+	var SequenceArray= new Array();
+	$('#signaltab .SequenceGroup').each(function( index ) {
+		SequenceArray.push($(this).getValues('.expressionAttr')[0])
+	});
+	_eqLogic.configuration.sequence=SequenceArray;
+   	return _eqLogic;
+}
+function printEqLogic(_eqLogic) {
+	$('.SequenceGroup').remove();
+	if (typeof(_eqLogic.configuration.sequence) !== 'undefined') {
+		for(var index in _eqLogic.configuration.sequence) { 
+			if( (typeof _eqLogic.configuration.sequence[index] === "object") && (_eqLogic.configuration.sequence[index] !== null) )
+				addSequence(_eqLogic.configuration.sequence[index]);
+		}
+	}
+	
+}
 function addCmdToTable(_cmd) {
 	var tr =$('<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">');
 	tr.append($('<td>')
@@ -23,6 +43,34 @@ function addCmdToTable(_cmd) {
 	$('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');
 	jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 }
+function addSequence(_sequence,_el) {
+	var div = $('<div class="SequenceGroup">')
+			.append($('<div class="input-group">')
+				.append($('<span class="input-group-btn">')
+					.append($('<input type="checkbox" class="expressionAttr" data-l1key="enable" checked/>')))
+				.append($('<span class="input-group-btn">')
+					.append($('<a class="btn btn-default conditionAttr btn-sm" data-action="remove">')
+						.append($('<i class="fa fa-minus-circle">'))))
+				.append($('<input class="expressionAttr form-control input-sm" data-l1key="name"/>'))
+				.append($('<select class="expressionAttr form-control input-sm" data-l1key="expression"/>')
+				       .append($('<option value="rampe">')
+					      .text('{{Rampe}}'))
+				       .append($('<option value="sin">')
+					      .text('{{Sinusoide}}'))
+				       .append($('<option value="carre">')
+					      .text('{{Carré}}')))));
+        
+	$('.parameter').append(div);
+	$('.parameter').find('tr:last').setValues(_sequence, '.expressionAttr');	
+	$('.seq_list').append($('<li>).text(_sequence.name);
+	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
+		$(this).closest('tr').remove();
+	});
+  
+}
+$('.sequenceAttr[data-action=add]').off().on('click',function(){
+	addSequence({});
+});
 $("body").on('click', ".listCmdAction", function() {
 	var el = $(this).closest('.form-group').find('input');
 	jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function (result) {
