@@ -65,6 +65,10 @@ function addSequence(_sequence) {
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
+	$('.expressionAttr[data-l1key=expression]').off().on('change',function(){
+		$(this).closest('tr').find('td:last').html('');
+		$(this).closest('tr').find('td:last').append(addParameter($(this).val()));
+	});
   
 }
 function addParameter(type) {
