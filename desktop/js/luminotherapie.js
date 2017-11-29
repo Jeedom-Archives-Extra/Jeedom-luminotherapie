@@ -58,7 +58,7 @@ function addSequence(_sequence,_el) {
 				       .append($('<option value="sin">')
 					      .text('{{Sinusoide}}'))
 				       .append($('<option value="carre">')
-					      .text('{{Carré}}')))));
+					      .text('{{Carré}}'))));
         
 	$('.parameter').append(div);
 	$('.parameter').find('tr:last').setValues(_sequence, '.expressionAttr');	
