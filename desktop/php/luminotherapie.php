@@ -67,6 +67,10 @@ $eqLogics = eqLogic::byType('luminotherapie');
 				<a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">
 					<i class="fa fa-list-alt"></i> Commandes</a>
 			</li>
+			<li role="presentation" class="">
+				<a href="#signaltab" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">
+					<i class="fa fa-list-alt"></i> Génération de l'ambiance</a>
+			</li>
 		</ul>
 		<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
 			<div role="tabpanel" class="tab-pane active" id="eqlogictab">
@@ -230,6 +234,35 @@ $eqLogics = eqLogic::byType('luminotherapie');
 				    <tbody></tbody>
 				</table>
 			</div>	
+			<div role="tabpanel" class="tab-pane" id="signaltab">	
+				<form class="form-horizontal">
+					<fieldset>
+						<legend>{{Creation de votre simulation :}}
+							<sup>
+								<i class="fa fa-question-circle tooltips" title="Créer par ajout de séquence votre ambiance lumineuse"></i>
+							</sup>
+							<a class="btn btn-success btn-xs sequenceAttr" data-action="add" style="margin-left: 5px;">
+								<i class="fa fa-plus-circle"></i>
+								{{Ajouter une séquence}}
+							</a>
+						</legend>
+					</fieldset>
+				</form>			
+				<div class="col-lg-6">	
+					<legend>Sequence</legend>
+					<ul class="seq_list">
+					</ul>
+				</div>
+				
+				<div class="col-lg-6">	
+					<legend>Parameter</legend>
+					<div class='parameter'></div>
+				</div>
+				<div>	
+					<legend>Votre simulation</legend>
+					<div id='GraphSim'></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
