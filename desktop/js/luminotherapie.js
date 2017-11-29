@@ -53,6 +53,8 @@ function addSequence(_sequence) {
 				.append($('<a class="btn btn-default conditionAttr btn-sm" data-action="remove">')
 					.append($('<i class="fa fa-minus-circle">'))))
 			.append($('<select class="expressionAttr form-control input-sm" data-l1key="expression"/>')
+			       .append($('<option value="constant">')
+				      .text('{{Constant}}'))
 			       .append($('<option value="rampe">')
 				      .text('{{Rampe}}'))
 			       .append($('<option value="sin">')
@@ -73,21 +75,47 @@ function addSequence(_sequence) {
 }
 function addParameter(type) {
 	var td=$('<td>');
+	td.append($('<div class="form-group">')
+		.append($('<label class="col-sm-2 control-label">')
+			.append('{{Durée du segment}}')
+			.append($('<sup>')
+				.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la duree du segment (min)">'))))
+		.append($('<div class="col-md-8 input-group">')
+			.append($('<input type="text" class="expressionAttr form-control" data-l1key="duree" placeholder="Saisissez la duree du segment (min)">'))));
+	td.append($('<div class="form-group">')
+		.append($('<label class="col-sm-2 control-label">')
+			.append('{{Offset}}')
+			.append($('<sup>')
+				.append($('<i class="fa fa-question-circle tooltips" title="Saisissez l\'offset de votre rampe">'))))
+		.append($('<div class="col-md-8 input-group">')
+			.append($('<input type="text" class="expressionAttr form-control" data-l1key="offset" placeholder="Saisissez l\'offset de votre segment">'))));
 	switch (type){
 		case "rampe":
-			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="coef"/>'));
-			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="offset"/>'));
-			break;
-		case "sin":
-			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="frequence"/>'));
-			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="amplitude"/>'));
-			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="offset"/>'));
-			break;
+			td.append($('<div class="form-group">')
+				.append($('<label class="col-sm-2 control-label">')
+					.append('{{Pente}}')
+					.append($('<sup>')
+						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la pente de votre rampe">'))))
+				.append($('<div class="col-md-8 input-group">')
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="pente" placeholder="Saisissez la pente de votre rampe">'))));
+		break;
 		case"carre":
-			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="frequence"/>'));
-			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="amplitude"/>'));
-			td.append($('<input class="expressionAttr form-control input-sm" data-l1key="offset"/>'));
-			break;
+		case "sin":
+			td.append($('<div class="form-group">')
+				.append($('<label class="col-sm-2 control-label">')
+					.append('{{Fréquence}}')
+					.append($('<sup>')
+						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la frequence de votre sinusoide">'))))
+				.append($('<div class="col-md-8 input-group">')
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="frequance" placeholder="Saisissez la frequence de votre sinusoide">'))));
+			td.append($('<div class="form-group">')
+				.append($('<label class="col-sm-2 control-label">')
+					.append('{{Amplitude}}')
+					.append($('<sup>')
+						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez l\'amplitude de votre segement">'))))
+				.append($('<div class="col-md-8 input-group">')
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="amplitude" placeholder="Saisissez l\'amplitude de votre segement">'))));
+		break;
 	}		
 	return td;
 }
