@@ -20,8 +20,7 @@ function printEqLogic(_eqLogic) {
 			if( (typeof _eqLogic.configuration.sequence[index] === "object") && (_eqLogic.configuration.sequence[index] !== null) )
 				addSequence(_eqLogic.configuration.sequence[index]);
 		}
-	}
-	
+	}	
 }
 function addCmdToTable(_cmd) {
 	var tr =$('<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">');
@@ -135,9 +134,38 @@ $("body").on('change', ".eqLogicAttr[data-l2key=DawnSimulatorEngineEndValue]", f
 	UpdateGraphSim();
 });
 $("body").on('change', ".eqLogicAttr[data-l2key=DawnSimulatorEngineDuration]", function() {
-	UpdateGraphSim();
+	UpdateSequenceGraph();
 });
-function UpdateGraphSim() {
+function UpdateSequenceGraph() {
+	$.ajax({
+		type: 'POST',
+			async:true,
+		url: 'plugins/luminotherapie/core/ajax/luminotherapie.ajax.php',
+		data: {
+			action:'getSimulaitonPoint',
+			id:$(".eqLogicAttr[data-l1key=id]").val()
+			},
+		dataType: 'json',
+		error: function (request, status, error) {
+		    handleAjaxError(request, status, error);
+		},
+		success: function (data) {		
+			var Series = [{
+				step: false,
+				name: '{{Simulation}}',
+				data: data.result,
+				type: 'line',
+				marker: {
+					enabled: false
+				},
+				tooltip: {
+					valueDecimals: 2
+				},
+			}];
+			drawSimpleGraph('SeqGraph', Series);
+		}
+	});
+}function UpdateGraphSim() {
 	var DawnSimulatorEngineType=$(".eqLogicAttr[data-l2key=DawnSimulatorEngineType]").val();
 	var DawnSimulatorEngineEndValue=$(".eqLogicAttr[data-l2key=DawnSimulatorEngineEndValue]").val();
 	var DawnSimulatorEngineDuration=$(".eqLogicAttr[data-l2key=DawnSimulatorEngineDuration]").val();
