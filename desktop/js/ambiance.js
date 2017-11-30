@@ -145,14 +145,26 @@ function addSequence(_sequence,_el) {
 				.append($('<a class="btn btn-default sequenceAttr btn-sm" data-action="remove">')
 					.append($('<i class="fa fa-minus-circle">'))))
 			.append($('<select class="expressionAttr form-control input-sm" data-l1key="expression"/>')
-			       .append($('<option value="constant">')
+			       	.append($('<option value="constant">')
 				      .text('{{Constant}}'))
-			       .append($('<option value="rampe">')
+			       	.append($('<option value="rampe">')
 				      .text('{{Rampe}}'))
-			       .append($('<option value="sin">')
+			 	.append($('<option value="sin">')
 				      .text('{{Sinusoide}}'))
-			       .append($('<option value="carre">')
-				      .text('{{Carré}}')))));
+				.append($('<option value="carre">')
+				      .text('{{Carré}}'))
+			       	.append($('<option value="InQuad">')
+				      .text('{{InQuad}}'))
+				.append($('<option value="InOutQuad">')
+				      .text('{{InOutQuad}}'))
+				.append($('<option value="InOutExpo">')
+				      .text('{{InOutExpo}}'))
+				.append($('<option value="OutInExpo">')
+				      .text('{{OutInExpo}}'))
+				.append($('<option value="InExpo">')
+				      .text('{{InExpo}}'))
+				.append($('<option value="OutExpo">')
+				      .text('{{OutExpo}}')))));
 	tr.append(addParameter(_sequence.expression));
 	_el.find('#SeqList tbody').append(tr);
 	_el.find('#SeqList tbody').find('tr:last').setValues(_sequence, '.expressionAttr');	
@@ -207,6 +219,20 @@ function addParameter(type) {
 						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez l\'amplitude de votre segement">'))))
 				.append($('<div class="col-md-8 input-group">')
 					.append($('<input type="text" class="expressionAttr form-control" data-l1key="amplitude" placeholder="Saisissez l\'amplitude de votre segement">'))));
+		break;
+		case 'InQuad':
+		case 'InOutQuad':
+		case 'InOutExpo':
+		case 'OutInExpo':
+		case 'InExpo':
+		case 'OutExpo':
+			td.append($('<div class="form-group">')
+				.append($('<label class="col-sm-2 control-label">')
+					.append('{{Valeur Maximal}}')
+					.append($('<sup>')
+						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la valeur maximal de votre simulation">'))))
+				.append($('<div class="col-md-8 input-group">')
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="max" placeholder="Saisissez la valeur maximal de votre simulation">'))
 		break;
 	}		
 	return td;
