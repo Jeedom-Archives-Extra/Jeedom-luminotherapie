@@ -8,16 +8,23 @@
 		if (init('action') == 'add') {	
 		      	exec('sudo mkdir -p '.dirname(__FILE__) . '/../../core/config/ambiance');
 		      	exec('sudo chmod 777 -R '.dirname(__FILE__) . '/../../core/config/ambiance');
-		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('ambiance').'.json',"a+");
+		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json',"a+");
+		      	fclose($file);
+			ajax::success(true);		
+		}
+		if (init('action') == 'save') {	
+   			exec('sudo rm '.dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json');
+		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json',"a+");
+			fwrite($file,init('ambiance'));
 		      	fclose($file);
 			ajax::success(true);		
 		}
 		if (init('action') == 'remove') {	
-   			exec('sudo rm '.dirname(__FILE__) . '/../../core/config/ambiance/'.init('ambiance').'.json');
+   			exec('sudo rm '.dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json');
 			ajax::success(true);
 		}
 		if (init('action') == 'get') {	
-		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('ambiance').'.json',"r");
+		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json',"r");
 			$ambiance='';
 			while (($buffer = fgets($file, 4096)) !== false) {
 				$ambiance.= $buffer;
