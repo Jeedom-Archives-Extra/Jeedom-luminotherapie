@@ -79,7 +79,7 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 			} 
 			?>
 		</div>
-    </div>
+    	</div>
 	<div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
 		<a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> Sauvegarder</a>
 		<a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> Supprimer</a>
@@ -206,41 +206,19 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">{{Type de simulation}}
+								<label class="col-sm-2 control-label">{{Ambiance}}
 									<sup>
-										<i class="fa fa-question-circle tooltips" title="Type de simulation"></i>
+										<i class="fa fa-question-circle tooltips" title="Choisir l'ambiance que vous souhaité appliquer a cette simulation"></i>
 									</sup>
 								</label>
 								<div class="col-md-8 input-group">
-									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DawnSimulatorEngineType">')
-										<option value="Linear">	{{Linear}}</option>
-										<option value="InQuad">{{InQuad}}</option>
-										<option value="InOutQuad">{{InOutQuad}}</option>
-										<option value="InOutExpo">{{InOutExpo}}</option>
-										<option value="OutInExpo">{{OutInExpo}}</option>
-										<option value="InExpo">{{InExpo}}</option>
-										<option value="OutExpo">{{OutExpo}}</option>
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ambiance">')
+										<?php
+											foreach ($ambiances as $ambiance) {
+												echo '<option value="' . str_replace('.json','',$ambiance) . '">{{' . str_replace('.json','',$ambiance). '}}</option>';
+											}
+										?>
 									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">{{Valeur maximal de la variation}}
-									<sup>
-										<i class="fa fa-question-circle tooltips" title="Valeur maximal de la variation (100 par defaut)"></i>
-									</sup>
-								</label>
-								<div class="col-md-8 input-group">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DawnSimulatorEngineEndValue" placeholder="{{Valeur d\'arret de la simulation (100 par defaut)}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">{{Durée de la simulation (min)}}
-									<sup>
-										<i class="fa fa-question-circle tooltips" title="Durée de la simulation en minute"></i>
-									</sup>
-								</label>
-								<div class="col-md-8 input-group">
-								<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DawnSimulatorEngineDuration" placeholder="{{Durée de la simulation}}"/>
 								</div>
 							</div>
 						</fieldset>
