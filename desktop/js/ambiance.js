@@ -57,7 +57,7 @@ $('.ambianceAction[data-action=save]').off().on('click',function(){
 			$('#div_alert').showAlert({message: error.message, level: 'danger'});
 		},
 		success: function (_data) {
-			var vars = getUrlVars();
+			/*var vars = getUrlVars();
 			var url = 'index.php?';
 			for (var i in vars) {
 				if (i != 'id' && i != 'saveSuccessFull' && i != 'removeSuccessFull') {
@@ -66,7 +66,8 @@ $('.ambianceAction[data-action=save]').off().on('click',function(){
 			}
 			modifyWithoutSave = false;
 			url += 'id=' + _data.id + '&saveSuccessFull=1';
-			loadPage(url);
+			loadPage(url);*/
+			UpdateSequenceGraph();
 		}
 	});
 });
@@ -240,12 +241,12 @@ function addParameter(type) {
 function UpdateSequenceGraph() {
 	$.ajax({
 		type: 'POST',
-			async:true,
-		url: 'plugins/luminotherapie/core/ajax/luminotherapie.ajax.php',
+		async:true,
+		url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
 		data: {
 			action:'getSimulaitonPoint',
-			id:$(".eqLogicAttr[data-l1key=id]").val()
-			},
+			name: currentAmbiance
+		},
 		dataType: 'json',
 		error: function (request, status, error) {
 		    handleAjaxError(request, status, error);
