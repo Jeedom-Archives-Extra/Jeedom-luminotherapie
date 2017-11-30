@@ -284,7 +284,7 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 			</li>
 		</ul>
 		<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
-			<div role="tabpanel" class="tab-pane" id="luminotab">	
+			<div role="tabpanel" class="tab-pane active" id="luminotab">	
 				<form class="form-horizontal">
 					<fieldset>
 						<legend>{{Creation de votre simulation :}}
