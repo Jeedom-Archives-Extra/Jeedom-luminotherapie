@@ -9,12 +9,13 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 <div class="row row-overflow">
     <div class="col-lg-2 col-md-3 col-sm-4">
         <div class="bs-sidebar">
-                <a class="btn btn-default ambianceAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add">
-					<i class="fa fa-plus-circle"></i> {{Ajouter une ambiance}}
-				</a>
-                <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add">
-					<i class="fa fa-plus-circle"></i> {{Ajouter une simulation}}
-				</a>
+			<a class="btn btn-default ambianceAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add">
+				<i class="fa fa-plus-circle"></i> {{Ajouter une ambiance}}
+			</a>
+			<a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add">
+				<i class="fa fa-plus-circle"></i> {{Ajouter une simulation}}
+			</a>
+			<ul>
                 <li class="filter" style="margin-bottom: 5px;">
 					<input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/>
 				</li>
@@ -350,6 +351,7 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 </div>
 
 <?php 
+include_file('desktop', 'ambiance', 'js', 'luminotherapie');
 include_file('desktop', 'luminotherapie', 'js', 'luminotherapie');
 include_file('core', 'plugin.template', 'js'); 
 ?>
