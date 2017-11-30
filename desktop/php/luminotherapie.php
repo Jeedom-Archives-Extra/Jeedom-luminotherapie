@@ -4,7 +4,7 @@ if (!isConnect('admin')) {
 }
 sendVarToJS('eqType', 'luminotherapie');
 $eqLogics = eqLogic::byType('luminotherapie');
-$ambiances=ls($directory, '*');
+$ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 ?>
 <div class="row row-overflow">
     <div class="col-lg-2 col-md-3 col-sm-4">
