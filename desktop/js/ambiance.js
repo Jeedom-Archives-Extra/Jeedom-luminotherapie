@@ -17,7 +17,7 @@ $('.ambianceDisplayCard').off().on('click',function(){
 		success: function (_data) {
 			$('.ambiance').show();
 			$('.SequenceGroup').remove();
-			if (_data.result.length > 0) {
+			if (typeof(_data.result) != 'undefined') {
 				for(var index in _data.result.sequence) { 
 					if( (typeof _data.result.sequence[index] === "object") && (_data.result.sequence[index] !== null) )
 						addSequence(_data.result.sequence[index]);
@@ -27,10 +27,17 @@ $('.ambianceDisplayCard').off().on('click',function(){
 	});
 });
 $('.ambianceAction[data-action=save]').off().on('click',function(){
+	var AmbianceArray= new Array();
 	var SequenceArray= new Array();
-	$('#signaltab .SequenceGroup').each(function( index ) {
+	$('#luminotab .SequenceGroup').each(function( index ) {
 		SequenceArray.push($(this).getValues('.expressionAttr')[0])
 	});
+	AmbianceArray['Luminosite']=SequenceArray;
+	var SequenceArray= new Array();
+	$('#colortab .SequenceGroup').each(function( index ) {
+		SequenceArray.push($(this).getValues('.expressionAttr')[0])
+	});
+	AmbianceArray['Couleur']=SequenceArray;
 	$.ajax({
 		type: 'POST',
 		async:true,
@@ -38,7 +45,7 @@ $('.ambianceAction[data-action=save]').off().on('click',function(){
 		data: {
 			action:'add',
 			name:  currentAmbiance,
-			ambiance: JSON.stringify(SequenceArray)
+			ambiance: JSON.stringify(AmbianceArray)
 		},
 		error: function (error) {
 			$('#div_alert').showAlert({message: error.message, level: 'danger'});
