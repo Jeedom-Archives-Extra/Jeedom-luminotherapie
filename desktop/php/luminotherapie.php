@@ -56,9 +56,9 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 				echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Vous n'avez pas encore d'ambiance de configurer, cliquez sur Ajouter pour commencer}}</span></center>";
 			} else {
 				foreach ($ambiances as $ambiance) {
-					echo '<div class="ambianceDisplayCard cursor" data-ambiance_id="' . $ambiance . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
+					echo '<div class="ambianceDisplayCard cursor" data-ambiance_id="' . str_replace('.json','',$ambiance) . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
 					echo '<center><img src="plugins/luminotherapie/plugin_info/luminotherapie_icon.png" height="105" width="95" /></center>';
-					echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $ambiance. '</center></span>';
+					echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . str_replace('.json','',$ambiance). '</center></span>';
 					echo '</div>';
 				}
 			} 
