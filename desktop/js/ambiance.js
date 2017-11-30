@@ -17,7 +17,7 @@ $('.ambianceDisplayCard').off().on('click',function(){
 		success: function (_data) {
 			$('.ambiance').show();
 			$('.SequenceGroup').remove();
-			if (typeof(_data.result.sequence) !== 'undefined') {
+			if (typeof(_data.result).length > 0) {
 				for(var index in _data.result.sequence) { 
 					if( (typeof _data.result.sequence[index] === "object") && (_data.result.sequence[index] !== null) )
 						addSequence(_data.result.sequence[index]);
