@@ -125,6 +125,23 @@ class luminotherapie extends eqLogic {
 		}
 		
 	}
+	public static function Sequences($name) {
+		$ambiance= file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$name.'.json');
+		$Value=null;	
+		foreach(json_decode($ambiance, true) as $key => $Sequences){	
+			if(count($Sequences) >0){
+				foreach($Sequences as $Sequence){
+					if(!$Sequence['enable'])
+						continue;
+					for($time=0; $time < $Sequence['duree'];$time++){
+						$Value[$key][]= self::equation($Sequence, $time, end($Value));
+						//sleep(60);
+					}
+				}
+			}
+		}
+		return $Value;
+	}
 	public static function Sequences($name,$Sequences="Luminosite") {
 		$ambiance= file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$name.'.json');
 		foreach(json_decode($ambiance)[$Sequences] as $Sequence){
