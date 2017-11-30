@@ -30,6 +30,7 @@ $('.ambianceDisplayCard').off().on('click',function(){
 						addSequence(data.result.Couleur[index],$('#colortab'));
 				}
 			}
+			UpdateSequenceGraph();
 		}
 	});
 });
@@ -67,7 +68,6 @@ $('.ambianceAction[data-action=save]').off().on('click',function(){
 			modifyWithoutSave = false;
 			url += 'id=' + _data.id + '&saveSuccessFull=1';
 			loadPage(url);*/
-			UpdateSequenceGraph();
 		}
 	});
 });
@@ -255,7 +255,7 @@ function UpdateSequenceGraph() {
 			var Series = [{
 				step: false,
 				name: '{{Simulation}}',
-				data: data.result,
+				data: data.result.Luminosite,
 				type: 'line',
 				marker: {
 					enabled: false
