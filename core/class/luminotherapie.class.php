@@ -96,11 +96,11 @@ class luminotherapie extends eqLogic {
 			$Ambiance=self::Sequences($luminotherapie->getConfiguration('ambiance'));
 			for($time=0;$time<=count($Ambiance);$time++){
 				if(is_object($cmdSlide)){
-					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$slider.'/'.$EndValue." - durée : ".$time."/".$Duration);
+					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$Ambiance['Luminosite'][$time]);
 					$cmdSlide->Execute(array('slider'=>$Ambiance['Luminosite'][$time]));
 				}
 				if(is_object($cmdRGB)){
-					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$color);
+					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$Ambiance['Couleur'][$time]);
 					$cmdRGB->Execute(array('color'=>$Ambiance['Couleur'][$time]));
 				}
 				sleep(60);
