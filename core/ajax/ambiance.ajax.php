@@ -24,13 +24,8 @@
 			ajax::success(true);
 		}
 		if (init('action') == 'get') {	
-		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json',"r");
-			$ambiance='';
-			while (($buffer = fgets($file, 4096)) !== false) {
-				$ambiance.= $buffer;
-			}
-		      	fclose($file);
-			ajax::success(utils::o2a($ambiance));
+			$ambiance= file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json');
+			ajax::success(json_decode($ambiance));
 		}
 		throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 		/*     * *********Catch exeption*************** */
