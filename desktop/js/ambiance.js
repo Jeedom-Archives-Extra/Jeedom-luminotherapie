@@ -43,7 +43,7 @@ $('.ambianceAction[data-action=save]').off().on('click',function(){
 		async:true,
 		url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
 		data: {
-			action:'add',
+			action:'save',
 			name:  currentAmbiance,
 			ambiance: JSON.stringify(AmbianceArray)
 		},
