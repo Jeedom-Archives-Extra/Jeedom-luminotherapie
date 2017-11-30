@@ -232,7 +232,7 @@ function addParameter(type) {
 					.append($('<sup>')
 						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la valeur maximal de votre simulation">'))))
 				.append($('<div class="col-md-8 input-group">')
-					.append($('<input type="text" class="expressionAttr form-control" data-l1key="max" placeholder="Saisissez la valeur maximal de votre simulation">'))
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="max" placeholder="Saisissez la valeur maximal de votre simulation">'))));
 		break;
 	}		
 	return td;
