@@ -1,5 +1,61 @@
 $("#SeqList").sortable({axis: "y", cursor: "move", items: ".SequenceGroup", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+var currentAmbiance='';
+$('.ambianceDisplayCard').off().on('click',function(){
+	currentAmbiance=$(this).attr('data-ambiance_id');
+	$('.eqLogicThumbnailDisplay').hide();	
+	$.ajax({
+		type: 'POST',
+		async:true,
+		url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
+		data: {
+			action:'get',
+			name: currentAmbiance
+		},
+		error: function (error) {
+			$('#div_alert').showAlert({message: error.message, level: 'danger'});
+		},
+		success: function (_data) {
+			$('.ambiance').show();
+			$('.SequenceGroup').remove();
+			if (typeof(_data.result.sequence) !== 'undefined') {
+				for(var index in _data.result.sequence) { 
+					if( (typeof _data.result.sequence[index] === "object") && (_data.result.sequence[index] !== null) )
+						addSequence(_data.result.sequence[index]);
+				}
+			}
+		}
+	});
+});
 $('.ambianceAction[data-action=save]').off().on('click',function(){
+	var SequenceArray= new Array();
+	$('#signaltab .SequenceGroup').each(function( index ) {
+		SequenceArray.push($(this).getValues('.expressionAttr')[0])
+	});
+	$.ajax({
+		type: 'POST',
+		async:true,
+		url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
+		data: {
+			action:'add',
+			name:  currentAmbiance,
+			ambiance: JSON.stringify(SequenceArray)
+		},
+		error: function (error) {
+			$('#div_alert').showAlert({message: error.message, level: 'danger'});
+		},
+		success: function (_data) {
+			var vars = getUrlVars();
+			var url = 'index.php?';
+			for (var i in vars) {
+				if (i != 'id' && i != 'saveSuccessFull' && i != 'removeSuccessFull') {
+					url += i + '=' + vars[i].replace('#', '') + '&';
+				}
+			}
+			modifyWithoutSave = false;
+			url += 'id=' + _data.id + '&saveSuccessFull=1';
+			loadPage(url);
+		}
+	});
 });
 $('.ambianceAction[data-action=remove]').on('click', function () {
         bootbox.confirm('{{Etes-vous sûr de vouloir supprimer l\'ambiance}} ?', function (result) {
@@ -10,7 +66,7 @@ $('.ambianceAction[data-action=remove]').on('click', function () {
 				url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
 				data: {
 					action:'remove',
-					ambiance: [{name: result}],
+					name: currentAmbiance,
 				},
 				error: function (error) {
 					$('#div_alert').showAlert({message: error.message, level: 'danger'});
@@ -40,7 +96,7 @@ $('.ambianceAction[data-action=add]').on('click', function () {
 				url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
 				data: {
 					action:'add',
-					ambiance: [{name: result}],
+					ambiance:  result,
 				},
 				error: function (error) {
 					$('#div_alert').showAlert({message: error.message, level: 'danger'});
@@ -66,24 +122,6 @@ $('.ambianceAction[data-action=copy]').off().on('click',function(){
 $('.sequenceAttr[data-action=add]').off().on('click',function(){
 	addSequence({});
 });
-function saveEqLogic(_eqLogic) {
-	_eqLogic.configuration.sequence=new Object();
-	var SequenceArray= new Array();
-	$('#signaltab .SequenceGroup').each(function( index ) {
-		SequenceArray.push($(this).getValues('.expressionAttr')[0])
-	});
-	_eqLogic.configuration.sequence=SequenceArray;
-   	return _eqLogic;
-}
-function printEqLogic(_eqLogic) {
-	$('.SequenceGroup').remove();
-	if (typeof(_eqLogic.configuration.sequence) !== 'undefined') {
-		for(var index in _eqLogic.configuration.sequence) { 
-			if( (typeof _eqLogic.configuration.sequence[index] === "object") && (_eqLogic.configuration.sequence[index] !== null) )
-				addSequence(_eqLogic.configuration.sequence[index]);
-		}
-	}	
-}
 function addSequence(_sequence) {
 	var tr = $('<tr class="SequenceGroup">');
 	tr.append($('<td>')
