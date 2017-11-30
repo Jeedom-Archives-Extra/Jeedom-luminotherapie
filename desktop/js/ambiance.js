@@ -1,4 +1,71 @@
 $("#SeqList").sortable({axis: "y", cursor: "move", items: ".SequenceGroup", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$('.ambianceAction[data-action=save]').off().on('click',function(){
+});
+$('.ambianceAction[data-action=remove]').on('click', function () {
+        bootbox.confirm('{{Etes-vous sûr de vouloir supprimer l\'ambiance}} ?', function (result) {
+            if (result) {
+			$.ajax({
+				type: 'POST',
+				async:true,
+				url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
+				data: {
+					action:'remove',
+					ambiance: [{name: result}],
+				},
+				error: function (error) {
+					$('#div_alert').showAlert({message: error.message, level: 'danger'});
+				},
+				success: function (_data) {
+					var vars = getUrlVars();
+					var url = 'index.php?';
+					for (var i in vars) {
+						if (i != 'id' && i != 'saveSuccessFull' && i != 'removeSuccessFull') {
+							url += i + '=' + vars[i].replace('#', '') + '&';
+						}
+					}
+					modifyWithoutSave = false;
+					url += 'id=' + _data.id + '&saveSuccessFull=1';
+					loadPage(url);
+				}
+			});
+		}
+	});
+});
+$('.ambianceAction[data-action=add]').on('click', function () {
+	bootbox.prompt("{{Nom de l'ambiance ?}}", function (result) {
+		if (result !== null) {
+			$.ajax({
+				type: 'POST',
+				async:true,
+				url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
+				data: {
+					action:'add',
+					ambiance: [{name: result}],
+				},
+				error: function (error) {
+					$('#div_alert').showAlert({message: error.message, level: 'danger'});
+				},
+				success: function (_data) {
+					var vars = getUrlVars();
+					var url = 'index.php?';
+					for (var i in vars) {
+						if (i != 'id' && i != 'saveSuccessFull' && i != 'removeSuccessFull') {
+							url += i + '=' + vars[i].replace('#', '') + '&';
+						}
+					}
+					modifyWithoutSave = false;
+					url += 'id=' + _data.id + '&saveSuccessFull=1';
+					loadPage(url);
+				}
+			});
+		}
+	});
+});
+$('.ambianceAction[data-action=copy]').off().on('click',function(){
+});
+$('.sequenceAttr[data-action=add]').off().on('click',function(){
+	addSequence({});
+});
 function saveEqLogic(_eqLogic) {
 	_eqLogic.configuration.sequence=new Object();
 	var SequenceArray= new Array();
@@ -93,9 +160,6 @@ function addParameter(type) {
 	}		
 	return td;
 }
-$('.sequenceAttr[data-action=add]').off().on('click',function(){
-	addSequence({});
-});
 function UpdateSequenceGraph() {
 	$.ajax({
 		type: 'POST',
