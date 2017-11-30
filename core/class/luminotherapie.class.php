@@ -86,41 +86,24 @@ class luminotherapie extends eqLogic {
 	public static function SimulAubeDemon($_option){
 		$luminotherapie=eqLogic::byId($_option['id']);
 		if(is_object($luminotherapie)){
-			$StartValue=$luminotherapie->getConfiguration('DawnSimulatorEngineStartValue');
-			if($StartValue=='')
-				$StartValue=0;
-			$EndValue=$luminotherapie->getConfiguration('DawnSimulatorEngineEndValue');
-			if($EndValue=='')
-				$EndValue=100;
-			$Duration=$luminotherapie->getConfiguration('DawnSimulatorEngineDuration');
-			if($Duration=='')
-				$Duration=30;
 			log::add('luminotherapie','info',$luminotherapie->getHumanName().' Lancement de la simulation d\'aube');
-			$time = 0;
 			$cmdSlide=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorCmd')));
 			$cmdRGB=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorColorCmd')));
 			if(is_object($cmdSlide))
 				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdSlide->getHumanName());
 			if(is_object($cmdRGB))
 				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
-			while(true){
-				$slider = ceil(self::dawnSimulatorEngine($luminotherapie->getConfiguration('DawnSimulatorEngineType'),$time,$StartValue, $EndValue, $Duration));
-				$Value=$slider/$EndValue;
-				$color=$luminotherapie->changeColor($Value);
-				$time++;
+			$Ambiance=self::Sequences($luminotherapie->getConfiguration('ambiance'));
+			foreach($time=0;$time<=count($Ambiance);$time++){
 				if(is_object($cmdSlide)){
 					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$slider.'/'.$EndValue." - durée : ".$time."/".$Duration);
-					$cmdSlide->Execute(array('slider'=>$slider));
+					$cmdSlide->Execute(array('slider'=>$Ambiance['Luminosite'][$time]));
 				}
 				if(is_object($cmdRGB)){
 					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$color);
-					$cmdRGB->Execute(array('color'=>$color));
+					$cmdRGB->Execute(array('color'=>$Ambiance['Couleur'][$time]));
 				}
-				if($slider == $EndValue || ($time - 1) == $Duration){
-					$luminotherapie->removeSimulAubeDemon();
-					break;
-				}else
-					sleep(60);
+				sleep(60);
 			}
 		}
 		
@@ -134,7 +117,7 @@ class luminotherapie extends eqLogic {
 					if(!$Sequence['enable'])
 						continue;
 					for($time=0; $time < $Sequence['duree'];$time++){
-						$Value[$key][]= self::equation($Sequence, $time, end($Value));
+						$Value[$key][]= ceil(self::equation($Sequence, $time, end($Value)));
 						//sleep(60);
 					}
 				}
@@ -204,61 +187,6 @@ class luminotherapie extends eqLogic {
 					return $Sequence['offset'] + $Sequence['max'];
 				else
 					return $Sequence['max'] * 1.001 * (-pow(2, -10 * $time / $Sequence['duree']) + 1) + $Sequence['offset'];
-			break;
-		}
-	}
-	public static function dawnSimulatorEngine($type, $time, $startValue, $endValue, $duration) {
-		if($startValue=='')
-			$startValue=0;
-		if($endValue=='')
-			$endValue=100;
-		if($duration=='')
-			$duration=30;
-		switch ($type){
-			case 'Linear':
-				return $endValue * $time / $duration + $startValue;
-			break;
-			case 'InQuad':
-				$time = $time / $duration;
-				return $endValue * pow($time, 2) + $startValue;
-			break;
-			case 'InOutQuad':
-				$time = $time / $duration * 2;
-				if ($time < 1)
-					return $endValue / 2 * pow($time, 2) + $startValue;
-				else
-					return -$endValue / 2 * (($time - 1) * ($time - 3) - 1) + $startValue;
-			break;
-			case 'InOutExpo':
-				if ($time == 0)
-					return $startValue ;
-				if ($time == $duration)
-					return $startValue + $endValue;
-				$time = $time / $duration * 2;
-				if ($time < 1)
-					return $endValue / 2 * pow(2, 10 * ($time - 1)) + $startValue - $endValue * 0.0005;
-				else{
-					$time = $time - 1;
-					return $endValue / 2 * 1.0005 * (-pow(2, -10 * $time) + 2) + $startValue;
-				}
-			break;
-			case 'OutInExpo':
-				if ($time < $duration / 2)
-					return self::dawnSimulatorEngine('OutExpo', $time * 2, $startValue, $endValue / 2, $duration);
-				else
-					return self::dawnSimulatorEngine('InExpo', ($time * 2) - $duration, $startValue + $endValue / 2, $endValue / 2, $duration);
-			break;
-			case 'InExpo':
-				if($time == 0)
-					return $startValue;
-				else
-					return $endValue * pow(2, 10 * ($time / $duration - 1)) + $startValue - $endValue * 0.001;	
-			break;
-			case 'OutExpo':
-				if($time == $duration)
-					return $startValue + $endValue;
-				else
-					return $endValue * 1.001 * (-pow(2, -10 * $time / $duration) + 1) + $startValue;
 			break;
 		}
 	}
