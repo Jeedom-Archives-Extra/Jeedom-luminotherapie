@@ -8,13 +8,22 @@
 		if (init('action') == 'add') {	
 		      	exec('sudo mkdir -p '.dirname(__FILE__) . '/../../core/config/ambiance');
 		      	exec('sudo chmod 777 -R '.dirname(__FILE__) . '/../../core/config/ambiance');
-		      	$ambiance=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('ambiance').'.json',"a+");
-		      	fclose($ambiance);
+		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('ambiance').'.json',"a+");
+		      	fclose($file);
 			ajax::success(true);		
 		}
 		if (init('action') == 'remove') {	
-      exec('sudo rm '.dirname(__FILE__) . '/../../core/config/ambiance/'.init('action').'.json');
-			ajax::error(true);
+   			exec('sudo rm '.dirname(__FILE__) . '/../../core/config/ambiance/'.init('ambiance').'.json');
+			ajax::success(true);
+		}
+		if (init('action') == 'get') {	
+		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('ambiance').'.json',"r");
+			$ambiance='';
+			while (($buffer = fgets($file, 4096)) !== false) {
+				$ambiance.= $buffer;
+			}
+		      	fclose($file);
+			ajax::success(utils::o2a($ambiance));
 		}
 		throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 		/*     * *********Catch exeption*************** */
