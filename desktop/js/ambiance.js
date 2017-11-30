@@ -4,40 +4,46 @@ $('.ambianceDisplayCard').off().on('click',function(){
 	currentAmbiance=$(this).attr('data-ambiance_id');
 	$('.eqLogicThumbnailDisplay').hide();	
 	$.ajax({
-		type: 'POST',
-		async:true,
+		type: 'POST',            
+		async: false,
 		url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
-		data: {
-			action:'get',
+		data:{
+			action: 'get',
 			name: currentAmbiance
 		},
-		error: function (error) {
-			$('#div_alert').showAlert({message: error.message, level: 'danger'});
-		},
-		success: function (_data) {
+		dataType: 'json',
+		global: false,
+		error: function(request, status, error) {},
+		success: function(data) {
+			if (!data.result){
+				return;
+			}
 			$('.ambiance').show();
 			$('.SequenceGroup').remove();
-			if (typeof(_data.result) != 'undefined') {
-				for(var index in _data.result.sequence) { 
-					if( (typeof _data.result.sequence[index] === "object") && (_data.result.sequence[index] !== null) )
-						addSequence(_data.result.sequence[index]);
+			if (typeof(data.result) != 'undefined') {
+				for(var index in data.result.Luminosite) { 
+					if( (typeof data.result.Luminosite[index] === "object") && (data.result.Luminosite[index] !== null) )
+						addSequence(data.result.Luminosite[index],$('#luminotab'));
+				}
+				for(var index in data.result.Couleur) { 
+					if( (typeof data.result.Couleur[index] === "object") && (data.result.Couleur[index] !== null) )
+						addSequence(data.result.Couleur[index],$('#colortab'));
 				}
 			}
 		}
 	});
 });
 $('.ambianceAction[data-action=save]').off().on('click',function(){
-	var AmbianceArray= new Array();
-	var SequenceArray= new Array();
+	var AmbianceArray= new Object();
+	AmbianceArray.Luminosite= new Array();
+	AmbianceArray.Couleur= new Array();
 	$('#luminotab .SequenceGroup').each(function( index ) {
-		SequenceArray.push($(this).getValues('.expressionAttr')[0])
+		AmbianceArray.Luminosite.push($(this).getValues('.expressionAttr')[0])
 	});
-	AmbianceArray['Luminosite']=SequenceArray;
 	var SequenceArray= new Array();
 	$('#colortab .SequenceGroup').each(function( index ) {
-		SequenceArray.push($(this).getValues('.expressionAttr')[0])
+		AmbianceArray.Couleur.push($(this).getValues('.expressionAttr')[0])
 	});
-	AmbianceArray['Couleur']=SequenceArray;
 	$.ajax({
 		type: 'POST',
 		async:true,
@@ -127,9 +133,9 @@ $('.ambianceAction[data-action=add]').on('click', function () {
 $('.ambianceAction[data-action=copy]').off().on('click',function(){
 });
 $('.sequenceAttr[data-action=add]').off().on('click',function(){
-	addSequence({});
+	addSequence({}, $(this).closest('.tab-pane'));
 });
-function addSequence(_sequence) {
+function addSequence(_sequence,_el) {
 	var tr = $('<tr class="SequenceGroup">');
 	tr.append($('<td>')
 		  .append($('<input type="checkbox" class="expressionAttr" data-l1key="enable" checked/>')));
@@ -148,8 +154,8 @@ function addSequence(_sequence) {
 			       .append($('<option value="carre">')
 				      .text('{{Carré}}')))));
 	tr.append(addParameter(_sequence.expression));
-	$('#SeqList tbody').append(tr);
-	$('#SeqList tbody').find('tr:last').setValues(_sequence, '.expressionAttr');	
+	_el.find('#SeqList tbody').append(tr);
+	_el.find('#SeqList tbody').find('tr:last').setValues(_sequence, '.expressionAttr');	
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
