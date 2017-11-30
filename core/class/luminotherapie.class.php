@@ -125,8 +125,9 @@ class luminotherapie extends eqLogic {
 		}
 		
 	}
-	public function Sequences() {
-		foreach($this->getConfiguration('sequence') as $Sequence){
+	public static function Sequences($name,$Sequences="Luminosite") {
+		$ambiance= file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$name.'.json');
+		foreach(json_decode($ambiance)[$Sequences] as $Sequence){
 			if(!$Sequence['enable'])
 				continue;
 			for($time=0; $time < $Sequence['duree'];$time++){
