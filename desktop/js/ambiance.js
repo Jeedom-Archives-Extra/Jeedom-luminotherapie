@@ -34,6 +34,10 @@ $('.ambianceDisplayCard').off().on('click',function(){
 		}
 	});
 });
+$('.ambianceAction[data-action=returnToThumbnailDisplay]').off().on('click',function(){
+	$('.ambiance').hide();
+	$('.eqLogicThumbnailDisplay').show();	
+});
 $('.ambianceAction[data-action=save]').off().on('click',function(){
 	var AmbianceArray= new Object();
 	AmbianceArray.Luminosite= new Array();
