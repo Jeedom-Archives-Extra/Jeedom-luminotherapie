@@ -130,13 +130,13 @@ class luminotherapie extends eqLogic {
 			if(!$Sequence['enable'])
 				continue;
 			for($time=0; $time < $Sequence['duree'];$time++){
-				$Value[]=$this->equation($Sequence, $time, end($Value));
+				$Value[]= self::equation($Sequence, $time, end($Value));
 				//sleep(60);
 			}
 		}
 		return $Value;
 	}
-	public function equation($Sequence, $time, $Value) {
+	public static function equation($Sequence, $time, $Value) {
 		switch ($Sequence['expression']){
 			case 'constant':
 				return $Sequence['offset'];
@@ -145,9 +145,59 @@ class luminotherapie extends eqLogic {
 				return $time * $Sequence['pente'] + $Sequence['offset'];
 			break;
 			case 'sin':
-				return $Sequence['amplitude'] * sin($time/$Sequence['offset']);
+				return $Sequence['amplitude'] * sin($time/(1/$Sequence['frequence']))+$Sequence['offset'];
 			break;
 			case 'carre':
+			break;
+			case 'InQuad':
+				$time = $time / $Sequence['duree'];
+				return $Sequence['max'] * pow($time, 2) + $Sequence['offset'];
+			break;
+			case 'InOutQuad':
+				$time = $time / $Sequence['duree'] * 2;
+				if ($time < 1)
+					return $Sequence['max'] / 2 * pow($time, 2) + $Sequence['offset'];
+				else
+					return -$Sequence['max'] / 2 * (($time - 1) * ($time - 3) - 1) + $Sequence['offset'];
+			break;
+			case 'InOutExpo':
+				if ($time == 0)
+					return $Sequence['offset'] ;
+				if ($time == $Sequence['duree'])
+					return $Sequence['offset'] + $Sequence['max'];
+				$time = $time / $Sequence['duree'] * 2;
+				if ($time < 1)
+					return $Sequence['max'] / 2 * pow(2, 10 * ($time - 1)) + $Sequence['offset'] - $Sequence['max'] * 0.0005;
+				else{
+					$time = $time - 1;
+					return $Sequence['max'] / 2 * 1.0005 * (-pow(2, -10 * $time) + 2) + $Sequence['offset'];
+				}
+			break;
+			case 'OutInExpo':
+				if ($time < $Sequence['duree'] / 2){
+					$Sequence['expression']  =  'OutExpo';
+					$time = $time * 2;
+					$Sequence['max'] = $Sequence['max'] / 2;
+					return self::equation($Sequence, $time, $Value);
+				}else{
+					$Sequence['expression']  =  'InExpo';
+					$time = ($time * 2) - $Sequence['duree'];
+					$Sequence['max'] = $Sequence['max'] / 2;
+					$Sequence['offset'] = $Sequence['offset'] + $Sequence['max'] / 2;
+					return self::equation($Sequence, $time, $Value);
+				}
+			break;
+			case 'InExpo':
+				if($time == 0)
+					return $Sequence['offset'];
+				else
+					return $Sequence['max'] * pow(2, 10 * ($time / $Sequence['duree'] - 1)) + $Sequence['offset'] - $Sequence['max'] * 0.001;	
+			break;
+			case 'OutExpo':
+				if($time == $Sequence['duree'])
+					return $Sequence['offset'] + $Sequence['max'];
+				else
+					return $Sequence['max'] * 1.001 * (-pow(2, -10 * $time / $Sequence['duree']) + 1) + $Sequence['offset'];
 			break;
 		}
 	}
