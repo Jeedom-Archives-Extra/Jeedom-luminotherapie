@@ -28,6 +28,9 @@
 			$ambiance= file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json');
 			ajax::success(json_decode($ambiance));
 		}
+		if (init('action') == 'getSimulaitonPoint') {	
+			ajax::success(luminotherapie::Sequences(init('name')));	
+		}
 		throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 		/*     * *********Catch exeption*************** */
 	} catch (Exception $e) {
