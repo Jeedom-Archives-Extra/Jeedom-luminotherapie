@@ -6,10 +6,10 @@
 			throw new Exception(__('401 - Accès non autorisé', __FILE__));
 		}
 		if (init('action') == 'add') {	
-      exec('sudo mkdir -R '.dirname(__FILE__) . '/../../core/config/ambiance');
-      exec('sudo chmod 777 -R '.dirname(__FILE__) . '/../../core/config/ambiance');
-      $ambiance=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('action').'.json',"a+");
-      fclose($ambiance);
+		      	exec('sudo mkdir -p '.dirname(__FILE__) . '/../../core/config/ambiance');
+		      	exec('sudo chmod 777 -R '.dirname(__FILE__) . '/../../core/config/ambiance');
+		      	$ambiance=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('ambiance').'.json',"a+");
+		      	fclose($ambiance);
 			ajax::success(true);		
 		}
 		if (init('action') == 'remove') {	
