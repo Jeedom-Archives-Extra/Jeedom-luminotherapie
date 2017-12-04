@@ -251,9 +251,9 @@ function UpdateSequenceGraph() {
 					valueDecimals: 2
 				},
 			}];
-			if (typeof(data.result.Luminosite) != 'undefined') {
+			if (typeof(data.result.Luminosite) != 'undefined') 
 				drawSimpleGraph('SeqLumGraph', SeriesLum);
-			if (typeof(data.result.Couleur) != 'undefined') {
+			if (typeof(data.result.Couleur) != 'undefined') 
 				drawColorGraph($('#SeqColorGraph'), data.result.Couleur);
 		}
 	});
