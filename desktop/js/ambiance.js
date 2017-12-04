@@ -133,10 +133,10 @@ function addSequence(_sequence,_el) {
 						      .text('{{Constant}}'))
 						.append($('<option value="rampe">')
 						      .text('{{Rampe}}'))
-						.append($('<option value="sin">')
+						/*.append($('<option value="sin">')
 						      .text('{{Sinusoide}}'))
 						.append($('<option value="carre">')
-						      .text('{{Carré}}'))
+						      .text('{{Carré}}'))*/
 						.append($('<option value="InQuad">')
 						      .text('{{InQuad}}'))
 						.append($('<option value="InOutQuad">')
