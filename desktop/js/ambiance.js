@@ -141,48 +141,60 @@ $('.sequenceAttr[data-action=add]').off().on('click',function(){
 	addSequence({}, $(this).closest('.tab-pane'));
 });
 function addSequence(_sequence,_el) {
-	var tr = $('<tr class="SequenceGroup">');
-	tr.append($('<td>')
-		  .append($('<input type="checkbox" class="expressionAttr" data-l1key="enable" checked/>')));
-	tr.append($('<td>')
-		.append($('<div class="input-group">')
-			.append($('<span class="input-group-btn">')
-				.append($('<a class="btn btn-default sequenceAttr btn-sm" data-action="remove">')
-					.append($('<i class="fa fa-minus-circle">'))))
-			.append($('<select class="expressionAttr form-control input-sm" data-l1key="expression"/>')
-			       	.append($('<option value="constant">')
-				      .text('{{Constant}}'))
-			       	.append($('<option value="rampe">')
-				      .text('{{Rampe}}'))
-			 	.append($('<option value="sin">')
-				      .text('{{Sinusoide}}'))
-				.append($('<option value="carre">')
-				      .text('{{Carré}}'))
-			       	.append($('<option value="InQuad">')
-				      .text('{{InQuad}}'))
-				.append($('<option value="InOutQuad">')
-				      .text('{{InOutQuad}}'))
-				.append($('<option value="InOutExpo">')
-				      .text('{{InOutExpo}}'))
-				.append($('<option value="OutInExpo">')
-				      .text('{{OutInExpo}}'))
-				.append($('<option value="InExpo">')
-				      .text('{{InExpo}}'))
-				.append($('<option value="OutExpo">')
-				      .text('{{OutExpo}}')))));
-	tr.append(addParameter(_sequence.expression));
-	_el.find('#SeqList tbody').append(tr);
+	var Parameter=null;
+	for(var index in _sequence) { 
+		var tr = $('<tr>')
+		tr.append($('<td>')
+			.append($('<div class="input-group">')
+				.append($('<select class="expressionAttr form-control input-sm" data-l1key="'+index+'" data-l2key="expression"/>')
+					.append($('<option value="constant">')
+					      .text('{{Constant}}'))
+					.append($('<option value="rampe">')
+					      .text('{{Rampe}}'))
+					.append($('<option value="sin">')
+					      .text('{{Sinusoide}}'))
+					.append($('<option value="carre">')
+					      .text('{{Carré}}'))
+					.append($('<option value="InQuad">')
+					      .text('{{InQuad}}'))
+					.append($('<option value="InOutQuad">')
+					      .text('{{InOutQuad}}'))
+					.append($('<option value="InOutExpo">')
+					      .text('{{InOutExpo}}'))
+					.append($('<option value="OutInExpo">')
+					      .text('{{OutInExpo}}'))
+					.append($('<option value="InExpo">')
+					      .text('{{InExpo}}'))
+					.append($('<option value="OutExpo">')
+					      .text('{{OutExpo}}')))));
+		tr.append(addParameter(_sequence.expression,index));
+		Parameter.append(tr);
+	}
+	var Sequences = $('<tr class="SequenceGroup">')
+		.append($('<td>')
+			.append($('<input type="checkbox" class="expressionAttr" data-l1key="enable" checked/>'))
+			.append($('<a class="btn btn-default sequenceAttr btn-sm" data-action="remove">')
+				.append($('<i class="fa fa-minus-circle">'))))
+		.append($('<td>')
+			.append($('<table class="table table-bordered table-condensed">')
+				.append($('<thead>')
+					.append($('<tr>')
+						.append($('<th>{{Type}}</th>'))
+						.append($('<th>{{Paramètre}}</th>'))))
+				.append($('<tbody>')
+				       .append(Parameter))));
+	_el.find('#SeqList tbody').append(Sequences);
 	_el.find('#SeqList tbody').find('tr:last').setValues(_sequence, '.expressionAttr');	
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
-	$('.expressionAttr[data-l1key=expression]').off().on('change',function(){
+	$('.expressionAttr[data-l2key=expression]').off().on('change',function(){
 		$(this).closest('tr').find('td:last').html('');
 		$(this).closest('tr').find('td:last').append(addParameter($(this).val()));
 	});
   
 }
-function addParameter(type) {
+function addParameter(type,index) {
 	var td=$('<td>');
 	td.append($('<div class="form-group">')
 		.append($('<label class="col-sm-2 control-label">')
@@ -190,14 +202,14 @@ function addParameter(type) {
 			.append($('<sup>')
 				.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la duree du segment (min)">'))))
 		.append($('<div class="col-md-8 input-group">')
-			.append($('<input type="text" class="expressionAttr form-control" data-l1key="duree" placeholder="Saisissez la duree du segment (min)">'))));
+			.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="duree" placeholder="Saisissez la duree du segment (min)">'))));
 	td.append($('<div class="form-group">')
 		.append($('<label class="col-sm-2 control-label">')
 			.append('{{Offset}}')
 			.append($('<sup>')
 				.append($('<i class="fa fa-question-circle tooltips" title="Saisissez l\'offset de votre rampe">'))))
 		.append($('<div class="col-md-8 input-group">')
-			.append($('<input type="text" class="expressionAttr form-control" data-l1key="offset" placeholder="Saisissez l\'offset de votre segment">'))));
+			.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="offset" placeholder="Saisissez l\'offset de votre segment">'))));
 	switch (type){
 		case "rampe":
 			td.append($('<div class="form-group">')
@@ -206,7 +218,7 @@ function addParameter(type) {
 					.append($('<sup>')
 						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la pente de votre rampe">'))))
 				.append($('<div class="col-md-8 input-group">')
-					.append($('<input type="text" class="expressionAttr form-control" data-l1key="pente" placeholder="Saisissez la pente de votre rampe">'))));
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="pente" placeholder="Saisissez la pente de votre rampe">'))));
 		break;
 		case"carre":
 		case "sin":
@@ -216,14 +228,14 @@ function addParameter(type) {
 					.append($('<sup>')
 						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la frequence de votre sinusoide">'))))
 				.append($('<div class="col-md-8 input-group">')
-					.append($('<input type="text" class="expressionAttr form-control" data-l1key="frequance" placeholder="Saisissez la frequence de votre sinusoide">'))));
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="frequance" placeholder="Saisissez la frequence de votre sinusoide">'))));
 			td.append($('<div class="form-group">')
 				.append($('<label class="col-sm-2 control-label">')
 					.append('{{Amplitude}}')
 					.append($('<sup>')
 						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez l\'amplitude de votre segement">'))))
 				.append($('<div class="col-md-8 input-group">')
-					.append($('<input type="text" class="expressionAttr form-control" data-l1key="amplitude" placeholder="Saisissez l\'amplitude de votre segement">'))));
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="amplitude" placeholder="Saisissez l\'amplitude de votre segement">'))));
 		break;
 		case 'InQuad':
 		case 'InOutQuad':
@@ -237,7 +249,7 @@ function addParameter(type) {
 					.append($('<sup>')
 						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la valeur maximal de votre simulation">'))))
 				.append($('<div class="col-md-8 input-group">')
-					.append($('<input type="text" class="expressionAttr form-control" data-l1key="max" placeholder="Saisissez la valeur maximal de votre simulation">'))));
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="max" placeholder="Saisissez la valeur maximal de votre simulation">'))));
 		break;
 	}		
 	return td;
