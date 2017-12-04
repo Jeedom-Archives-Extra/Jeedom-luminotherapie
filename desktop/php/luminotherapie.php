@@ -316,8 +316,6 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 						<thead>
 							<tr>
 								<th></th>
-								<th>{{Type}}</th>
-								<th>{{Paramètre}}</th>
 							</tr>
 						</thead>
 						<tbody></tbody>
