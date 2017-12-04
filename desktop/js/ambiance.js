@@ -272,7 +272,7 @@ function UpdateSequenceGraph() {
 		    handleAjaxError(request, status, error);
 		},
 		success: function (data) {		
-			var Series = [{
+			var SeriesLum = [{
 				step: false,
 				name: '{{Simulation}}',
 				data: data.result.Luminosite,
@@ -284,7 +284,20 @@ function UpdateSequenceGraph() {
 					valueDecimals: 2
 				},
 			}];
-			drawSimpleGraph('SeqGraph', Series);
+			drawSimpleGraph('SeqLumGraph', SeriesLum);
+			var SeriesColor = [{
+				step: false,
+				name: '{{Simulation}}',
+				data: data.result.Couleur,
+				type: 'line',
+				marker: {
+					enabled: false
+				},
+				tooltip: {
+					valueDecimals: 2
+				},
+			}];
+			drawSimpleGraph('SeqColorGraph', SeriesColor);
 		}
 	});
 }
