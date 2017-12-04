@@ -267,6 +267,17 @@ function UpdateSequenceGraph() {
 				},
 			}];
 			drawSimpleGraph('SeqLumGraph', SeriesLum);
+			drawColorGraph($('#SeqLumGraph'), data.result.Couleur);
 		}
 	});
+}
+
+function drawColorGraph(_el, _serie) {
+	var index=0
+  	setTimeout(function(){
+		_el.css('background-color',_serie[index])
+		index++;
+		if(index >_serie.length)
+			index=0;
+	},1000);
 }
