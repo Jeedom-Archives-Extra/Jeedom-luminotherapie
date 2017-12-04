@@ -146,32 +146,34 @@ $('.sequenceAttr[data-action=add]').off().on('click',function(){
 function addSequence(_sequence,_el) {
 	var Parameter=$('<tbody>');
 	for(var index in _sequence) { 
-		var tr = $('<tr>')
-		tr.append($('<td>')
-			.append($('<div class="input-group">')
-				.append($('<select class="expressionAttr form-control input-sm" data-l1key="'+index+'" data-l2key="expression"/>')
-					.append($('<option value="constant">')
-					      .text('{{Constant}}'))
-					.append($('<option value="rampe">')
-					      .text('{{Rampe}}'))
-					.append($('<option value="sin">')
-					      .text('{{Sinusoide}}'))
-					.append($('<option value="carre">')
-					      .text('{{Carré}}'))
-					.append($('<option value="InQuad">')
-					      .text('{{InQuad}}'))
-					.append($('<option value="InOutQuad">')
-					      .text('{{InOutQuad}}'))
-					.append($('<option value="InOutExpo">')
-					      .text('{{InOutExpo}}'))
-					.append($('<option value="OutInExpo">')
-					      .text('{{OutInExpo}}'))
-					.append($('<option value="InExpo">')
-					      .text('{{InExpo}}'))
-					.append($('<option value="OutExpo">')
-					      .text('{{OutExpo}}')))));
-		tr.append(addParameter(_sequence.expression,index));
-		Parameter.append(tr);
+		if(index != 'enable'){
+			var tr = $('<tr>')
+			tr.append($('<td>')
+				.append($('<div class="input-group">')
+					.append($('<select class="expressionAttr form-control input-sm" data-l1key="'+index+'" data-l2key="expression"/>')
+						.append($('<option value="constant">')
+						      .text('{{Constant}}'))
+						.append($('<option value="rampe">')
+						      .text('{{Rampe}}'))
+						.append($('<option value="sin">')
+						      .text('{{Sinusoide}}'))
+						.append($('<option value="carre">')
+						      .text('{{Carré}}'))
+						.append($('<option value="InQuad">')
+						      .text('{{InQuad}}'))
+						.append($('<option value="InOutQuad">')
+						      .text('{{InOutQuad}}'))
+						.append($('<option value="InOutExpo">')
+						      .text('{{InOutExpo}}'))
+						.append($('<option value="OutInExpo">')
+						      .text('{{OutInExpo}}'))
+						.append($('<option value="InExpo">')
+						      .text('{{InExpo}}'))
+						.append($('<option value="OutExpo">')
+						      .text('{{OutExpo}}')))));
+			tr.append(addParameter(_sequence.expression,index));
+			Parameter.append(tr);
+		}
 	}
 	var Sequences = $('<tr class="SequenceGroup">')
 		.append($('<td>')
