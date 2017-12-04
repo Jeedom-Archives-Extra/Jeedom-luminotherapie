@@ -119,12 +119,12 @@ class luminotherapie extends eqLogic {
 						continue;
 					if($key == 'Luminosite'){
 						for($time=0; $time < $Sequence['duree'];$time++)
-							$Value[$key][]= ceil(self::equation($Sequence['lum'], $time, end($Value)));
+							$Value[$key][]= ceil(self::equation($Sequence['duree'],$Sequence['lum'], $time, end($Value)));
 					}else{
 						for($time=0; $time < $Sequence['duree'];$time++){
-							$R= ceil(self::equation($Sequence['R'], $time, end($Value)));
-							$G= ceil(self::equation($Sequence['G'], $time, end($Value)));
-							$B= ceil(self::equation($Sequence['B'], $time, end($Value)));
+							$R= ceil(self::equation($Sequence['duree'],$Sequence['R'], $time, end($Value)));
+							$G= ceil(self::equation($Sequence['duree'],$Sequence['G'], $time, end($Value)));
+							$B= ceil(self::equation($Sequence['duree'],$Sequence['B'], $time, end($Value)));
 							$Value[$key][]=self::rgb2html($R, $G, $B);
 						}
 					}
@@ -133,7 +133,7 @@ class luminotherapie extends eqLogic {
 		}
 		return $Value;
 	}
-	public static function equation($Sequence, $time, $Value) {
+	public static function equation($Duree,$Sequence, $time, $Value) {
 		switch ($Sequence['expression']){
 			case 'constant':
 				return $Sequence['offset'];
@@ -147,11 +147,11 @@ class luminotherapie extends eqLogic {
 			case 'carre':
 			break;
 			case 'InQuad':
-				$time = $time / $Sequence['duree'];
+				$time = $time / $Duree;
 				return $Sequence['max'] * pow($time, 2) + $Sequence['offset'];
 			break;
 			case 'InOutQuad':
-				$time = $time / $Sequence['duree'] * 2;
+				$time = $time / $Duree * 2;
 				if ($time < 1)
 					return $Sequence['max'] / 2 * pow($time, 2) + $Sequence['offset'];
 				else
@@ -160,9 +160,9 @@ class luminotherapie extends eqLogic {
 			case 'InOutExpo':
 				if ($time == 0)
 					return $Sequence['offset'] ;
-				if ($time == $Sequence['duree'])
+				if ($time == $Duree)
 					return $Sequence['offset'] + $Sequence['max'];
-				$time = $time / $Sequence['duree'] * 2;
+				$time = $time / $Duree * 2;
 				if ($time < 1)
 					return $Sequence['max'] / 2 * pow(2, 10 * ($time - 1)) + $Sequence['offset'] - $Sequence['max'] * 0.0005;
 				else{
@@ -171,30 +171,30 @@ class luminotherapie extends eqLogic {
 				}
 			break;
 			case 'OutInExpo':
-				if ($time < $Sequence['duree'] / 2){
+				if ($time < $Duree / 2){
 					$Sequence['expression']  =  'OutExpo';
 					$time = $time * 2;
 					$Sequence['max'] = $Sequence['max'] / 2;
-					return self::equation($Sequence, $time, $Value);
+					return self::equation($Duree,$Sequence, $time, $Value);
 				}else{
 					$Sequence['expression']  =  'InExpo';
 					$time = ($time * 2) - $Sequence['duree'];
 					$Sequence['max'] = $Sequence['max'] / 2;
 					$Sequence['offset'] = $Sequence['offset'] + $Sequence['max'] / 2;
-					return self::equation($Sequence, $time, $Value);
+					return self::equation($Duree,$Sequence, $time, $Value);
 				}
 			break;
 			case 'InExpo':
 				if($time == 0)
 					return $Sequence['offset'];
 				else
-					return $Sequence['max'] * pow(2, 10 * ($time / $Sequence['duree'] - 1)) + $Sequence['offset'] - $Sequence['max'] * 0.001;	
+					return $Sequence['max'] * pow(2, 10 * ($time / $Duree- 1)) + $Sequence['offset'] - $Sequence['max'] * 0.001;	
 			break;
 			case 'OutExpo':
-				if($time == $Sequence['duree'])
+				if($time == $Duree)
 					return $Sequence['offset'] + $Sequence['max'];
 				else
-					return $Sequence['max'] * 1.001 * (-pow(2, -10 * $time / $Sequence['duree']) + 1) + $Sequence['offset'];
+					return $Sequence['max'] * 1.001 * (-pow(2, -10 * $time / $Duree) + 1) + $Sequence['offset'];
 			break;
 		}
 	}
