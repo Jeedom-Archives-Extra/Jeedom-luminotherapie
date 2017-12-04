@@ -1,4 +1,4 @@
-$("#SeqList").sortable({axis: "y", cursor: "move", items: ".SequenceGroup", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$(".SeqList").sortable({axis: "y", cursor: "move", items: ".SequenceGroup", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 var currentAmbiance='';
 $('.ambianceDisplayCard').off().on('click',function(){
 	currentAmbiance=$(this).attr('data-ambiance_id');
@@ -99,34 +99,20 @@ $('.ambianceAction[data-action=remove]').on('click', function () {
 $('.ambianceAction[data-action=add]').on('click', function () {
 	bootbox.prompt("{{Nom de l'ambiance ?}}", function (result) {
 		if (result !== null) {
-			$.ajax({
-				type: 'POST',
-				async:true,
-				url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
-				data: {
-					action:'add',
-					ambiance:  result,
-				},
-				error: function (error) {
-					$('#div_alert').showAlert({message: error.message, level: 'danger'});
-				},
-				success: function (_data) {
-					var vars = getUrlVars();
-					var url = 'index.php?';
-					for (var i in vars) {
-						if (i != 'id' && i != 'saveSuccessFull' && i != 'removeSuccessFull') {
-							url += i + '=' + vars[i].replace('#', '') + '&';
-						}
-					}
-					modifyWithoutSave = false;
-					url += 'id=' + _data.id + '&saveSuccessFull=1';
-					loadPage(url);
-				}
-			});
+			currentAmbiance=result;
+			$('.eqLogicThumbnailDisplay').hide();	
+			$('.ambiance').show();
+			$('.SequenceGroup').remove();
 		}
 	});
 });
 $('.ambianceAction[data-action=copy]').off().on('click',function(){
+	bootbox.prompt("{{Nom de l'ambiance ?}}", function (result) {
+		if (result !== null) {
+			currentAmbiance=result;
+			$('.ambianceAction[data-action=save]').trigger('click');
+		}
+	});
 });
 $('.sequenceAttr[data-action=add]').off().on('click',function(){
   if($(this).closest('.tab-pane').attr('id') == 'luminotab')
@@ -176,7 +162,7 @@ function addSequence(_sequence,_el) {
 			.append($('<input type="text" class="expressionAttr form-control" data-l1key="duree" placeholder="Saisissez la duree du segment (en fonction de votre echelle de temps)">')))
 		.append($('<td>')
 			.append($('<table class="table table-bordered table-condensed">').append(Parameter)));
-	_el.find('#SeqList .sequences').append(Sequences);
+	_el.find('.SeqList .sequences').append(Sequences);
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
@@ -184,7 +170,7 @@ function addSequence(_sequence,_el) {
 		$(this).closest('tr').find('td:last').html('');
 		$(this).closest('tr').find('td:last').append(addParameter($(this).val(),$(this).attr('data-l1key')));
 	});
-	_el.find('#SeqList .sequences').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
+	_el.find('.SeqList .sequences').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
 }
 function addParameter(type,index) {
 	var td=$('<td>');
