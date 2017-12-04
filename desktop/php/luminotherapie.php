@@ -221,6 +221,20 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 									</select>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">{{Unité de temps}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Choisir l'echelle de temps pour votre simulation"></i>
+									</sup>
+								</label>
+								<div class="col-md-8 input-group">
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="temps">')
+										<option value="sec">{{Seconde}}</option>
+										<option value="min">{{Minute}}</option>
+										<option value="heure">{{Heure}}</option>
+									</select>
+								</div>
+							</div>
 						</fieldset>
 					</form>
 				</div>
