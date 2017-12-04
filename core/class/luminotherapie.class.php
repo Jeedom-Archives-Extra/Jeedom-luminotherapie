@@ -151,26 +151,24 @@ class luminotherapie extends eqLogic {
 		switch ($Sequence['expression']){
 			case 'constant':
 				return $Sequence['offset'];
-			break;
 			case 'rampe':
 				return $time * $Sequence['pente'] + $Sequence['offset'];
-			break;
 			case 'sin':
 				return $Sequence['amplitude'] * sin($time/(1/$Sequence['frequence']))+$Sequence['offset'];
-			break;
 			case 'carre':
-			break;
+				if($time>$Sequence['frequence']/2)
+					return $Sequence['offset']+$Sequence['amplitude'];
+			    	else
+				  	return $Sequence['offset']-$Sequence['amplitude'];
 			case 'InQuad':
 				$time = $time / $Duree;
 				return $Sequence['max'] * pow($time, 2) + $Sequence['offset'];
-			break;
 			case 'InOutQuad':
 				$time = $time / $Duree * 2;
 				if ($time < 1)
 					return $Sequence['max'] / 2 * pow($time, 2) + $Sequence['offset'];
 				else
 					return -$Sequence['max'] / 2 * (($time - 1) * ($time - 3) - 1) + $Sequence['offset'];
-			break;
 			case 'InOutExpo':
 				if ($time == 0)
 					return $Sequence['offset'] ;
@@ -183,7 +181,6 @@ class luminotherapie extends eqLogic {
 					$time = $time - 1;
 					return $Sequence['max'] / 2 * 1.0005 * (-pow(2, -10 * $time) + 2) + $Sequence['offset'];
 				}
-			break;
 			case 'OutInExpo':
 				if ($time < $Duree / 2){
 					$Sequence['expression']  =  'OutExpo';
@@ -197,19 +194,16 @@ class luminotherapie extends eqLogic {
 					$Sequence['offset'] = $Sequence['offset'] + $Sequence['max'] / 2;
 					return self::equation($Duree,$Sequence, $time, $Value);
 				}
-			break;
 			case 'InExpo':
 				if($time == 0)
 					return $Sequence['offset'];
 				else
 					return $Sequence['max'] * pow(2, 10 * ($time / $Duree- 1)) + $Sequence['offset'] - $Sequence['max'] * 0.001;	
-			break;
 			case 'OutExpo':
 				if($time == $Duree)
 					return $Sequence['offset'] + $Sequence['max'];
 				else
 					return $Sequence['max'] * 1.001 * (-pow(2, -10 * $time / $Duree) + 1) + $Sequence['offset'];
-			break;
 		}
 	}
 	private static function html2rgb($color){
