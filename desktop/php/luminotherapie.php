@@ -295,7 +295,7 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 					<div id='SeqLumGraph'></div>
 				</div>	
 				<div>	
-					<table id="SeqList" class="table table-bordered table-condensed">
+					<table class="SeqList table table-bordered table-condensed">
 						<thead>
 							<tr>
 								<th></th>
@@ -331,7 +331,7 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 					<div id='SeqColorGraph'></div>
 				</div>	
 				<div>	
-					<table id="SeqList" class="table table-bordered table-condensed">
+					<table class="SeqList table table-bordered table-condensed">
 						<thead>
 							<tr>
 								<th></th>
