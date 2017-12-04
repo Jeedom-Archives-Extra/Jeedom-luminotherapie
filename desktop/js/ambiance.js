@@ -173,7 +173,7 @@ function addSequence(_sequence,_el) {
 			.append($('<a class="btn btn-default sequenceAttr btn-sm" data-action="remove">')
 				.append($('<i class="fa fa-minus-circle">'))))
 		.append($('<td>')
-			.append($('<input type="text" class="expressionAttr form-control" data-l1key="duree" placeholder="Saisissez la duree du segment (min)">')))
+			.append($('<input type="text" class="expressionAttr form-control" data-l1key="duree" placeholder="Saisissez la duree du segment (en fonction de votre echelle de temps)">')))
 		.append($('<td>')
 			.append($('<table class="table table-bordered table-condensed">').append(Parameter)));
 	_el.find('#SeqList .sequences').append(Sequences);
