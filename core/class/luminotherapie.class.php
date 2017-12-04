@@ -113,12 +113,23 @@ class luminotherapie extends eqLogic {
 		$Value=null;	
 		foreach(json_decode($ambiance, true) as $key => $Sequences){	
 			if(count($Sequences) >0){
+				$Step=null;
 				foreach($Sequences as $Sequence){
 					if(!$Sequence['enable'])
 						continue;
-					for($time=0; $time < $Sequence['duree'];$time++){
-						$Value[$key][]= ceil(self::equation($Sequence, $time, end($Value)));
-						//sleep(60);
+					if($key == 'Luminosite'){
+						for($time=0; $time < $Sequence['lum']['duree'];$time++)
+							$Value[$key][]= ceil(self::equation($Sequence['lum'], $time, end($Value)));
+					}else{
+						$Color=null;
+						for($time=0; $time < $Sequence['R']['duree'];$time++)
+							$Color['R'][]= ceil(self::equation($Sequence['R'], $time, end($Value)));
+						for($time=0; $time < $Sequence['G']['duree'];$time++)
+							$Color['G'][]= ceil(self::equation($Sequence['G'], $time, end($Value)));
+						for($time=0; $time < $Sequence['B']['duree'];$time++)
+							$Color['B'][]= ceil(self::equation($Sequence['B'], $time, end($Value)));
+						for($loop=0;$loop<count($Color['R']);$loop++)
+							$Value[$key][]=self::rgb2html($Color['R'][$loop], $Color['G'][$loop], $Color['B'][$loop]);
 					}
 				}
 			}
@@ -190,22 +201,7 @@ class luminotherapie extends eqLogic {
 			break;
 		}
 	}
-	private function changeColor($Value){
-		//$r 0% = 255; 50% = 0 ;100% = 0
-		//$g 0% = 0; 50% = 255 ;100% = 0
-		//$b 0% = 0; 50% = 0 ;100% = 255
-		if($Value > 0.5){
-			$r=255*$Value;
-			$g=255*(1-$Value);
-			$b=0;
-		}else{
-			$r=0;
-			$g=255*$Value;
-			$b=255*(1-$Value);
-		}
-		return $this->rgb2html($r, $g, $b);
-	}
-	private function html2rgb($color){
+	private static function html2rgb($color){
 		if ($color[0] == '#')
 			$color = substr($color, 1);
 		if (strlen($color) == 6)
@@ -221,7 +217,7 @@ class luminotherapie extends eqLogic {
 		$b = hexdec($b);
 		return array($r, $g, $b);
 	}
-	private function rgb2html($r, $g=-1, $b=-1)	{
+	private static function rgb2html($r, $g=-1, $b=-1)	{
 		if (is_array($r) && sizeof($r) == 3)
 			list($r, $g, $b) = $r;
 		$r = intval($r); 
