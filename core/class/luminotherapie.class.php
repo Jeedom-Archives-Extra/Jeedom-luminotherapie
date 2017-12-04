@@ -118,7 +118,7 @@ class luminotherapie extends eqLogic {
 					if(!$Sequence['enable'])
 						continue;
 					if($key == 'Luminosite'){
-						for($time=0; $time < $Sequence['lum']['duree'];$time++)
+						for($time=0; $time < $Sequence['duree'];$time++)
 							$Value[$key][]= ceil(self::equation($Sequence['lum'], $time, end($Value)));
 					}else{
 						for($time=0; $time < $Sequence['duree'];$time++){
