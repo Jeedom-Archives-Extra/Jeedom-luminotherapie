@@ -148,6 +148,7 @@ function addSequence(_sequence,_el) {
 	for(var index in _sequence) { 
 		if(index != 'enable'){
 			var tr = $('<tr>')
+			tr.append($('<td>').text(index));
 			tr.append($('<td>')
 				.append($('<div class="input-group">')
 					.append($('<select class="expressionAttr form-control input-sm" data-l1key="'+index+'" data-l2key="expression"/>')
@@ -181,6 +182,14 @@ function addSequence(_sequence,_el) {
 			.append($('<a class="btn btn-default sequenceAttr btn-sm" data-action="remove">')
 				.append($('<i class="fa fa-minus-circle">'))))
 		.append($('<td>')
+			.append($('<div class="form-group">')
+			.append($('<label class="col-sm-2 control-label">')
+				.append('{{Durée du segment}}')
+				.append($('<sup>')
+					.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la duree du segment (min)">'))))
+			.append($('<div class="col-md-8 input-group">')
+				.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="duree" placeholder="Saisissez la duree du segment (min)">')))))
+		.append($('<td>')
 			.append($('<table class="table table-bordered table-condensed">')
 				.append($('<thead>')
 					.append($('<tr>')
@@ -188,7 +197,7 @@ function addSequence(_sequence,_el) {
 						.append($('<th>{{Paramètre}}</th>'))))
 				.append(Parameter)));
 	_el.find('#SeqList .sequences').append(Sequences);
-	_el.find('#SeqList .sequences').find('tr:last').setValues(_sequence, '.expressionAttr');	
+	_el.find('#SeqList .sequences').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
@@ -200,13 +209,6 @@ function addSequence(_sequence,_el) {
 }
 function addParameter(type,index) {
 	var td=$('<td>');
-	td.append($('<div class="form-group">')
-		.append($('<label class="col-sm-2 control-label">')
-			.append('{{Durée du segment}}')
-			.append($('<sup>')
-				.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la duree du segment (min)">'))))
-		.append($('<div class="col-md-8 input-group">')
-			.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="duree" placeholder="Saisissez la duree du segment (min)">'))));
 	td.append($('<div class="form-group">')
 		.append($('<label class="col-sm-2 control-label">')
 			.append('{{Offset}}')
