@@ -121,15 +121,12 @@ class luminotherapie extends eqLogic {
 						for($time=0; $time < $Sequence['lum']['duree'];$time++)
 							$Value[$key][]= ceil(self::equation($Sequence['lum'], $time, end($Value)));
 					}else{
-						$Color=null;
-						for($time=0; $time < $Sequence['R']['duree'];$time++)
-							$Color['R'][]= ceil(self::equation($Sequence['R'], $time, end($Value)));
-						for($time=0; $time < $Sequence['G']['duree'];$time++)
-							$Color['G'][]= ceil(self::equation($Sequence['G'], $time, end($Value)));
-						for($time=0; $time < $Sequence['B']['duree'];$time++)
-							$Color['B'][]= ceil(self::equation($Sequence['B'], $time, end($Value)));
-						for($loop=0;$loop<count($Color['R']);$loop++)
-							$Value[$key][]=self::rgb2html($Color['R'][$loop], $Color['G'][$loop], $Color['B'][$loop]);
+						for($time=0; $time < $Sequence['duree'];$time++){
+							$R= ceil(self::equation($Sequence['R'], $time, end($Value)));
+							$G= ceil(self::equation($Sequence['G'], $time, end($Value)));
+							$B= ceil(self::equation($Sequence['B'], $time, end($Value)));
+							$Value[$key][]=self::rgb2html($R, $G, $B);
+						}
 					}
 				}
 			}
