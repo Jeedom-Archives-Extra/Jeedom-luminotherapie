@@ -6,7 +6,6 @@
 			throw new Exception(__('401 - Accès non autorisé', __FILE__));
 		}
 		if (init('action') == 'add') {	
-		      	exec('sudo mkdir -p '.dirname(__FILE__) . '/../../core/config/ambiance');
 		      	exec('sudo chmod 777 -R '.dirname(__FILE__) . '/../../core/config/ambiance');
 		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json',"a+");
 			fwrite($file,'{"Luminosite":[],"Couleur":[]}');
