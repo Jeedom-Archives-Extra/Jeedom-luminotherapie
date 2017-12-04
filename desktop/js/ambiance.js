@@ -188,7 +188,7 @@ function addSequence(_sequence,_el) {
 				.append($('<sup>')
 					.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la duree du segment (min)">'))))
 			.append($('<div class="col-md-8 input-group">')
-				.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="duree" placeholder="Saisissez la duree du segment (min)">')))))
+				.append($('<input type="text" class="expressionAttr form-control" data-l1key="duree" placeholder="Saisissez la duree du segment (min)">')))))
 		.append($('<td>')
 			.append($('<table class="table table-bordered table-condensed">')
 				.append($('<thead>')
