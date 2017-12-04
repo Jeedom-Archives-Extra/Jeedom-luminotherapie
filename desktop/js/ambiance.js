@@ -251,8 +251,10 @@ function UpdateSequenceGraph() {
 					valueDecimals: 2
 				},
 			}];
-			drawSimpleGraph('SeqLumGraph', SeriesLum);
-			drawColorGraph($('#SeqColorGraph'), data.result.Couleur);
+			if(data.result.Luminosite.length >0)
+				drawSimpleGraph('SeqLumGraph', SeriesLum);
+			if(data.result.Couleur.length >0)
+				drawColorGraph($('#SeqColorGraph'), data.result.Couleur);
 		}
 	});
 }
