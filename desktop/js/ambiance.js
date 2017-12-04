@@ -138,10 +138,13 @@ $('.ambianceAction[data-action=add]').on('click', function () {
 $('.ambianceAction[data-action=copy]').off().on('click',function(){
 });
 $('.sequenceAttr[data-action=add]').off().on('click',function(){
-	addSequence({}, $(this).closest('.tab-pane'));
+  if($(this).closest('.tab-pane').attr('id') == 'luminotab')
+	addSequence({lum:{}}, $(this).closest('.tab-pane'));
+  else
+	addSequence({R:{},G:{},B:{}}, $(this).closest('.tab-pane'));
 });
 function addSequence(_sequence,_el) {
-	var Parameter=null;
+	var Parameter=$('<tbody>');
 	for(var index in _sequence) { 
 		var tr = $('<tr>')
 		tr.append($('<td>')
@@ -181,10 +184,9 @@ function addSequence(_sequence,_el) {
 					.append($('<tr>')
 						.append($('<th>{{Type}}</th>'))
 						.append($('<th>{{Paramètre}}</th>'))))
-				.append($('<tbody>')
-				       .append(Parameter))));
-	_el.find('#SeqList tbody').append(Sequences);
-	_el.find('#SeqList tbody').find('tr:last').setValues(_sequence, '.expressionAttr');	
+				.append(Parameter)));
+	_el.find('#SeqList sequences').append(Sequences);
+	_el.find('#SeqList sequences').find('tr:last').setValues(_sequence, '.expressionAttr');	
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
