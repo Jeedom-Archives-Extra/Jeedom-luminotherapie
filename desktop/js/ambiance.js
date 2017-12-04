@@ -146,7 +146,7 @@ $('.sequenceAttr[data-action=add]').off().on('click',function(){
 function addSequence(_sequence,_el) {
 	var Parameter=$('<tbody>');
 	for(var index in _sequence) { 
-		if(index != 'enable'){
+		if(index != 'enable' && index != 'duree'){
 			var tr = $('<tr>')
 			tr.append($('<td>').text(index));
 			tr.append($('<td>')
