@@ -1,1 +1,1 @@
-{"Luminosite":[{"enable":"1","expression":"InOutExpo","duree":"30","offset":"0","max":"50"}],"Couleur":[]}
+{Luminosite: [{enable: "1", lum: {expression: "InOutQuad", duree: "30", offset: "0", max: "50"}}],"Couleur":[]}
