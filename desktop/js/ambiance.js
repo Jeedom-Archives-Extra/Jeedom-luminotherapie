@@ -62,16 +62,7 @@ $('.ambianceAction[data-action=save]').off().on('click',function(){
 			$('#div_alert').showAlert({message: error.message, level: 'danger'});
 		},
 		success: function (_data) {
-			/*var vars = getUrlVars();
-			var url = 'index.php?';
-			for (var i in vars) {
-				if (i != 'id' && i != 'saveSuccessFull' && i != 'removeSuccessFull') {
-					url += i + '=' + vars[i].replace('#', '') + '&';
-				}
-			}
-			modifyWithoutSave = false;
-			url += 'id=' + _data.id + '&saveSuccessFull=1';
-			loadPage(url);*/
+			UpdateSequenceGraph();
 		}
 	});
 });
