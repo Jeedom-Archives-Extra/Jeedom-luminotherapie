@@ -233,8 +233,8 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 				<table id="table_cmd" class="table table-bordered table-condensed">
 					<thead>
 					<tr>
-						<th>Nom</th>
-						<th>Paramètre</th>
+						<th>{{Nom}}</th>
+						<th>{{Paramètre}}</th>
 					</tr>
 					</thead>
 					<tbody></tbody>
@@ -285,6 +285,12 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 						<thead>
 							<tr>
 								<th></th>
+								<th>
+									{{Durée du segment}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Saisissez la duree du segment (min)"></i>
+									</sup>
+								</th>
 								<th>Parametre</th>
 							</tr>
 						</thead>
@@ -315,6 +321,12 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 						<thead>
 							<tr>
 								<th></th>
+								<th>
+									{{Durée du segment}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Saisissez la duree du segment (min)"></i>
+									</sup>
+								</th>
 								<th>Parametre</th>
 							</tr>
 						</thead>
