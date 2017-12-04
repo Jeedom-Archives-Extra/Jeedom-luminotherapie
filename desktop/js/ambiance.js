@@ -185,14 +185,14 @@ function addSequence(_sequence,_el) {
 						.append($('<th>{{Type}}</th>'))
 						.append($('<th>{{Paramètre}}</th>'))))
 				.append(Parameter)));
-	_el.find('#SeqList sequences').append(Sequences);
-	_el.find('#SeqList sequences').find('tr:last').setValues(_sequence, '.expressionAttr');	
+	_el.find('#SeqList .sequences').append(Sequences);
+	_el.find('#SeqList .sequences').find('tr:last').setValues(_sequence, '.expressionAttr');	
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
 	$('.expressionAttr[data-l2key=expression]').off().on('change',function(){
 		$(this).closest('tr').find('td:last').html('');
-		$(this).closest('tr').find('td:last').append(addParameter($(this).val()));
+		$(this).closest('tr').find('td:last').append(addParameter($(this).val(),$(this).attr('data-l1key')));
 	});
   
 }
