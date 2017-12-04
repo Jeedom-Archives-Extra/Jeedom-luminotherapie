@@ -177,7 +177,6 @@ function addSequence(_sequence,_el) {
 		.append($('<td>')
 			.append($('<table class="table table-bordered table-condensed">').append(Parameter)));
 	_el.find('#SeqList .sequences').append(Sequences);
-	_el.find('#SeqList .sequences').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
@@ -185,7 +184,7 @@ function addSequence(_sequence,_el) {
 		$(this).closest('tr').find('td:last').html('');
 		$(this).closest('tr').find('td:last').append(addParameter($(this).val(),$(this).attr('data-l1key')));
 	});
-  
+	_el.find('#SeqList .sequences').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
 }
 function addParameter(type,index) {
 	var td=$('<td>');
@@ -267,17 +266,22 @@ function UpdateSequenceGraph() {
 				},
 			}];
 			drawSimpleGraph('SeqLumGraph', SeriesLum);
-			drawColorGraph($('#SeqLumGraph'), data.result.Couleur);
+			drawColorGraph($('#SeqColorGraph'), data.result.Couleur);
 		}
 	});
 }
-
+var timer= null;
 function drawColorGraph(_el, _serie) {
+  	_el.css('width',"100");
+  	_el.css('height',"100");
 	var index=0
-  	setTimeout(function(){
-		_el.css('background-color',_serie[index])
+	if(timer!= null)
+		clearInterval(timer);
+  	timer = setInterval(function(){
+		_el.css('background-color',_serie[index]);
+      		_el.text(_serie[index])
 		index++;
 		if(index >_serie.length)
 			index=0;
-	},1000);
+	},100);
 }
