@@ -94,7 +94,7 @@ class luminotherapie extends eqLogic {
 			if(is_object($cmdRGB))
 				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
 			$Ambiance=self::Sequences($luminotherapie->getConfiguration('ambiance'));
-			for($time=0;$time<=count($Ambiance);$time++){
+			for($time=0;$time<count($Ambiance['Luminosite']);$time++){
 				if(is_object($cmdSlide)){
 					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$Ambiance['Luminosite'][$time]);
 					$cmdSlide->Execute(array('slider'=>$Ambiance['Luminosite'][$time]));
@@ -105,8 +105,8 @@ class luminotherapie extends eqLogic {
 				}
 				sleep(60);
 			}
+       			$luminotherapie->removeSimulAubeDemon();
 		}
-		
 	}
 	public static function Sequences($name) {
 		$ambiance= file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$name.'.json');
