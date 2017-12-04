@@ -276,19 +276,6 @@ function UpdateSequenceGraph() {
 				},
 			}];
 			drawSimpleGraph('SeqLumGraph', SeriesLum);
-			var SeriesColor = [{
-				step: false,
-				name: '{{Simulation}}',
-				data: data.result.Couleur,
-				type: 'line',
-				marker: {
-					enabled: false
-				},
-				tooltip: {
-					valueDecimals: 2
-				},
-			}];
-			drawSimpleGraph('SeqColorGraph', SeriesColor);
 		}
 	});
 }
