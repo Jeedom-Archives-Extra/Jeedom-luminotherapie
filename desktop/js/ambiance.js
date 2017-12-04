@@ -31,7 +31,7 @@ $('.ambianceDisplayCard').off().on('click',function(){
 				}
 			}
 			UpdateSequenceGraph();
-		}
+		} 
 	});
 });
 $('.ambianceAction[data-action=returnToThumbnailDisplay]').off().on('click',function(){
