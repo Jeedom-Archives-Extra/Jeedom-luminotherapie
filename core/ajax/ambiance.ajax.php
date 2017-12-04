@@ -5,13 +5,6 @@
 		if (!isConnect('admin')) {
 			throw new Exception(__('401 - Accès non autorisé', __FILE__));
 		}
-		if (init('action') == 'add') {	
-		      	exec('sudo chmod 777 -R '.dirname(__FILE__) . '/../../core/config/ambiance');
-		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json',"a+");
-			fwrite($file,'{"Luminosite":[],"Couleur":[]}');
-		      	fclose($file);
-			ajax::success(true);		
-		}
 		if (init('action') == 'save') {	
    			exec('sudo rm '.dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json');
 		      	$file=fopen(dirname(__FILE__) . '/../../core/config/ambiance/'.init('name').'.json',"a+");
