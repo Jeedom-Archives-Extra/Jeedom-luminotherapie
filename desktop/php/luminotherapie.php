@@ -285,11 +285,10 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 						<thead>
 							<tr>
 								<th></th>
-								<th>{{Type}}</th>
-								<th>{{Paramètre}}</th>
+								<th>Parametre</th>
 							</tr>
 						</thead>
-						<tbody></tbody>
+						<tbody class="sequences"></tbody>
 					</table>
 				</div>	
 			</div>
@@ -316,9 +315,10 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 						<thead>
 							<tr>
 								<th></th>
+								<th>Parametre</th>
 							</tr>
 						</thead>
-						<tbody></tbody>
+						<tbody class="sequences"></tbody>
 					</table>
 				</div>	
 			</div>
