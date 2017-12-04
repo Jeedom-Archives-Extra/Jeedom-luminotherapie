@@ -278,7 +278,7 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 				</form>		
 				<div>	
 					<legend>Votre simulation</legend>
-					<div id='SeqGraph'></div>
+					<div id='SeqLumGraph'></div>
 				</div>	
 				<div>	
 					<table id="SeqList" class="table table-bordered table-condensed">
@@ -308,7 +308,7 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 				</form>		
 				<div>	
 					<legend>Votre simulation</legend>
-					<div id='SeqGraph'></div>
+					<div id='SeqColorGraph'></div>
 				</div>	
 				<div>	
 					<table id="SeqList" class="table table-bordered table-condensed">
