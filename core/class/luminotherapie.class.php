@@ -103,7 +103,16 @@ class luminotherapie extends eqLogic {
 					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$Ambiance['Couleur'][$time]);
 					$cmdRGB->Execute(array('color'=>$Ambiance['Couleur'][$time]));
 				}
-				sleep(60);
+				switch($luminotherapie->getConfiguration('temps')){
+					case 'sec':
+					break;
+					case 'min':
+						sleep(60);
+					break;
+					case 'heure':
+						sleep(60*60);
+					break;
+				}
 			}
        			$luminotherapie->removeSimulAubeDemon();
 		}
