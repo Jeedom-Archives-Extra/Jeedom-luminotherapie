@@ -257,7 +257,7 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 		</div>
 	</div>
 	<div class="col-lg-10 col-md-9 col-sm-8 ambiance" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
-		<a class="btn btn-warning ambianceAction pull-right" data-action="partage"><i class="fa fa-check-circle"></i> Partager</a>
+		<a class="btn btn-warning ambianceAction pull-right" data-action="partage" target="_blank"><i class="fa fa-download"></i> Partager</a>
 		<a class="btn btn-success ambianceAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> Sauvegarder</a>
 		<a class="btn btn-danger ambianceAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> Supprimer</a>
 		<a class="btn btn-default ambianceAction pull-right" data-action="copy"><i class="fa fa-copy"></i>{{Dupliquer}}</a>
