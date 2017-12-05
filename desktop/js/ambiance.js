@@ -18,7 +18,7 @@ $('.ambianceDisplayCard').off().on('click',function(){
 			if (!data.result){
 				return;
 			}
-			$('.ambianceAction[data-action=partage]').attr('href',"core/php/downloadFile.php?pathfile="+encodeURI("/plugins/luminotherapie/core/config/ambiance/"+currentAmbiance+".json"));
+			$('.ambianceAction[data-action=partage]').attr('href',"core/php/downloadFile.php?pathfile="+encodeURIComponent("plugins/luminotherapie/core/config/ambiance/"+currentAmbiance+".json"));
 			$('.ambiance').show();
 			$('.SequenceGroup').remove();
 			if (typeof(data.result) != 'undefined') {
@@ -274,3 +274,4 @@ function drawColorGraph(_el, _serie) {
 			index=0;
 	},100);
 }
+=
