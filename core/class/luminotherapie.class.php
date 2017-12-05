@@ -6,11 +6,11 @@ class luminotherapie extends eqLogic {
 		$return['log'] = 'luminotherapie';
 		$return['launchable'] = 'ok';
 		$return['state'] = 'ok';
-	/*	foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
+		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
 			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
 			if(is_object($cron) && !$cron->running())
 				$return['state'] = 'nok';
-		}*/
+		}
 		return $return;
 	}
 	public static function deamon_start($_debug = false) {
@@ -19,23 +19,23 @@ class luminotherapie extends eqLogic {
 			return;
 		if ($deamon_info['state'] == 'ok') 
 			return;
-		/*foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
+		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
 			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
 			if(is_object($cron) && !$cron->running()){
 				$cron->start();
 				$cron->run();
 			}
-		}*/
+		}
 		
 	}
 	public static function deamon_stop() {	
-		/*foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
+		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
 			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
 			if(is_object($cron)){
 				$cron->stop();
 				$cron->remove();
 			}
-		}	*/	
+		}
 	}
 	public function postSave() {
 		$this->AddCommande('Démarrage','start',"action", 'other',1);
