@@ -4,9 +4,9 @@
       "enable":"1",
       "duree":"30",
       "lum":{
-        "expression":"InOutExpo",
+        "expression":"InOutQuad",
         "offset":"0",
-        "max":"50"
+        "max":"100"
       }
     }
   ],
