@@ -18,6 +18,7 @@ $('.ambianceDisplayCard').off().on('click',function(){
 			if (!data.result){
 				return;
 			}
+			$('.ambianceAction[data-action=partage]').attr('href',"core/php/downloadFile.php?pathfile="+encodeURI("/plugins/luminotherapie/core/config/ambiance/"+currentAmbiance+".json"));
 			$('.ambiance').show();
 			$('.SequenceGroup').remove();
 			if (typeof(data.result) != 'undefined') {
