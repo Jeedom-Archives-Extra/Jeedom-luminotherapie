@@ -235,6 +235,18 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 									</select>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" >
+									{{Répéter la simulation}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Si actif, la simulation se repettera jusqu'a l'arret manuel" style="font-size : 1em;color:grey;"></i>
+									</sup>
+								</label>
+								<div class="col-sm-5">
+									<label>{{Activer}}</label>
+									<input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="repeat"/>
+								</div>
+							</div>
 						</fieldset>
 					</form>
 				</div>
