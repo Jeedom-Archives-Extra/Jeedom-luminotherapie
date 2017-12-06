@@ -162,7 +162,7 @@ class luminotherapie extends eqLogic {
 			case 'carre':
 				//$Sequence['dutty']
 				//$Sequence['periode']
-				if(($time)%2=0)
+				if(($time)%2==0)
 					return $Sequence['offset']+$Sequence['amplitude'];
 			    	else
 				  	return $Sequence['offset']-$Sequence['amplitude'];
