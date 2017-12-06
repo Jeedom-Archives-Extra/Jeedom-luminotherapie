@@ -158,9 +158,11 @@ class luminotherapie extends eqLogic {
 			case 'rampe':
 				return $time * $Sequence['pente'] + $Sequence['offset'];
 			case 'sin':
+				$Periode=$Sequence['frequence']/2;
 				return $Sequence['amplitude'] * sin($time/(1/$Sequence['frequence']))+$Sequence['offset'];
 			case 'carre':
-				if($time>$Sequence['frequence']/2)
+				$Periode=$Sequence['frequence']/2;
+				if(floor($time/$Periode)%2==0)
 					return $Sequence['offset']+$Sequence['amplitude'];
 			    	else
 				  	return $Sequence['offset']-$Sequence['amplitude'];
