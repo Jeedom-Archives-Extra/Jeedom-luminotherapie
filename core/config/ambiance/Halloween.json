@@ -1,0 +1,1 @@
+{"Luminosite":[{"enable":"1","duree":"60","lum":{"expression":"sin","offset":"60","periode":"60","amplitude":"30"}}],"Couleur":[{"enable":"1","duree":"60","R":{"expression":"constant","offset":"255"},"G":{"expression":"sin","offset":"160","periode":"60","amplitude":"10"},"B":{"expression":"constant","offset":"0"}}]}
