@@ -250,7 +250,7 @@ function UpdateSequenceGraph() {
 		},
 		success: function (data) {		
 			var Series = [{
-				step: false,
+				step: true,
 				name: '{{Simulation}}',
 				data: data.result.Luminosite,
 				type: 'line',
