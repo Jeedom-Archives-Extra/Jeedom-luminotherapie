@@ -196,9 +196,9 @@ function addParameter(type,index) {
 		case "sin":
 			td.append($('<div class="form-group">')
 				.append($('<label class="col-sm-2 control-label">')
-					.append('{{Fréquence}}')
+					.append('{{Periode}}')
 					.append($('<sup>')
-						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la frequence de votre sinusoide">'))))
+						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez la période de votre sinusoide">'))))
 				.append($('<div class="col-md-8 input-group">')
 					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="frequance" placeholder="Saisissez la frequence de votre sinusoide">'))));
 			td.append($('<div class="form-group">')
