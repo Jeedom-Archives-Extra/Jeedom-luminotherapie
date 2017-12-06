@@ -247,20 +247,22 @@ function UpdateSequenceGraph() {
 		    handleAjaxError(request, status, error);
 		},
 		success: function (data) {		
-			var Series = [{
-				step: true,
-				name: '{{Simulation}}',
-				data: data.result.Luminosite,
-				type: 'line',
-				marker: {
-					enabled: false
-				},
-				tooltip: {
-					valueDecimals: 2
-				},
-			}];
-			if (typeof(data.result.Luminosite) != 'undefined') 
+			
+			if (typeof(data.result.Luminosite) != 'undefined') {
+				var Series = [{
+					step: true,
+					name: '{{Simulation}}',
+					data: data.result.Luminosite,
+					type: 'line',
+					marker: {
+						enabled: false
+					},
+					tooltip: {
+						valueDecimals: 2
+					},
+				}];
 				drawSimpleGraph('SeqLumGraph', Series);
+			}
 			if (typeof(data.result.Couleur) != 'undefined') 
 				drawColorGraph($('#SeqColorGraph'), data.result.Couleur);
 		}
