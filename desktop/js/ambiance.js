@@ -193,6 +193,13 @@ function addParameter(type,index) {
 					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="pente" placeholder="Saisissez la pente de votre rampe">'))));
 		break;
 		case"carre":
+			td.append($('<div class="form-group">')
+				.append($('<label class="col-sm-2 control-label">')
+					.append('{{Rapport cyclique}}')
+					.append($('<sup>')
+						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez le rapport cyclique de votre signal (%)">'))))
+				.append($('<div class="col-md-8 input-group">')
+					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="dutty" placeholder="Saisissez le rapport cyclique de votre signal (%)">'))));
 		case "sin":
 			td.append($('<div class="form-group">')
 				.append($('<label class="col-sm-2 control-label">')
@@ -208,15 +215,6 @@ function addParameter(type,index) {
 						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez l\'amplitude de votre segement">'))))
 				.append($('<div class="col-md-8 input-group">')
 					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="amplitude" placeholder="Saisissez l\'amplitude de votre segement">'))));
-		
-		case"carre":
-			td.append($('<div class="form-group">')
-				.append($('<label class="col-sm-2 control-label">')
-					.append('{{Rapport cyclique}}')
-					.append($('<sup>')
-						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez le rapport cyclique de votre signal (%)">'))))
-				.append($('<div class="col-md-8 input-group">')
-					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="dutty" placeholder="Saisissez le rapport cyclique de votre signal (%)">'))));
 			break;
 		case 'InQuad':
 		case 'InOutQuad':
