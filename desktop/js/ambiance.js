@@ -274,4 +274,3 @@ function drawColorGraph(_el, _serie) {
 			index=0;
 	},100);
 }
-=
