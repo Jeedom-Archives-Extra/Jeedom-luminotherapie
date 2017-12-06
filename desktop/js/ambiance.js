@@ -247,7 +247,7 @@ function UpdateSequenceGraph() {
 		    handleAjaxError(request, status, error);
 		},
 		success: function (data) {			
-			if (typeof(data.result) != 'undefined') 
+			if (data.result == null) 
 				return;
 			if (typeof(data.result.Luminosite) != 'undefined') {
 				var Series = [{
