@@ -163,27 +163,28 @@ function addSequence(_sequence,_el) {
 		$(this).closest('tr').find('td:last').append(addParameter($(this).val(),$(this).attr('data-l1key')));
 		UpdateSequenceGraph();
 	});
-	$('.expressionAttr[data-l1key=duree]').off().on('change',function(){
+	$('.expressionAttr[data-l1key=duree]').off().on('keypress',function(){
 		UpdateSequenceGraph();
 	});
-	$('.expressionAttr[data-l2key=offset]').off().on('change',function(){
+	$('.expressionAttr[data-l2key=offset]').off().on('keypress',function(){
 		UpdateSequenceGraph();
 	});
-	$('.expressionAttr[data-l2key=pente]').off().on('change',function(){
+	$('.expressionAttr[data-l2key=pente]').off().on('keypress',function(){
 		UpdateSequenceGraph();
 	});
-	$('.expressionAttr[data-l2key=dutty]').off().on('change',function(){
+	$('.expressionAttr[data-l2key=dutty]').off().on('keypress',function(){
 		UpdateSequenceGraph();
 	});
-	$('.expressionAttr[data-l2key=periode]').off().on('change',function(){
+	$('.expressionAttr[data-l2key=periode]').off().on('keypress',function(){
 		UpdateSequenceGraph();
 	});
-	$('.expressionAttr[data-l2key=amplitude]').off().on('change',function(){
+	$('.expressionAttr[data-l2key=amplitude]').off().on('keypress',function(){
 		UpdateSequenceGraph();
 	});
-	$('.expressionAttr[data-l2key=max]').off().on('change',function(){
+	$('.expressionAttr[data-l2key=max]').off().on('keypress',function(){
 		UpdateSequenceGraph();
 	});
+	_el.find('.SeqList .sequences').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
 }
 function addParameter(type,index) {
 	var td=$('<td>');
