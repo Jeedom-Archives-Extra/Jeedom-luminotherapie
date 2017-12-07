@@ -123,7 +123,7 @@ class luminotherapie extends eqLogic {
 	}
 	public static function Sequences($ambiance) {
 		$Value=null;	
-		foreach($ambianc as $key => $Sequences){	
+		foreach($ambiance as $key => $Sequences){	
 			if(count($Sequences) >0){
 				$Step=null;
 				foreach($Sequences as $Sequence){
@@ -157,6 +157,8 @@ class luminotherapie extends eqLogic {
 			case 'rampe':
 				return $time * $Sequence['pente'] + $Sequence['offset'];
 			case 'sin':
+				if($Sequence['periode'] == '')
+					$Sequence['periode']=1;
 				return $Sequence['amplitude'] * sin(2*pi()*$time/$Sequence['periode'])+$Sequence['offset'];
 			case 'carre':
 				//$Sequence['dutty']
