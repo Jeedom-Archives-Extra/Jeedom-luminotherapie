@@ -164,10 +164,12 @@ class luminotherapie extends eqLogic {
 				//$Sequence['dutty']
 				//$Sequence['periode']
 				$Position = $time - $time / ($Sequence['periode'] * ($Sequence['dutty'] / 100));
+				log::add('luminotherapie','debug',$luminotherapie->getHumanName().' reste : '.$Position.'/'.$time);
+					
 				if($Position > 1)
 					return $Sequence['offset']+$Sequence['amplitude'];
 			    	else
-				  	return $Sequence['offset']-$Sequence['amplitude'];
+				  	return $Sequence['offset'];
 			case 'InQuad':
 				$time = $time / $Duree;
 				return $Sequence['max'] * pow($time, 2) + $Sequence['offset'];
