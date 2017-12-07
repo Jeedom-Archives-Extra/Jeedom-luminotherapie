@@ -40,16 +40,6 @@ $('.ambianceAction[data-action=returnToThumbnailDisplay]').off().on('click',func
 	$('.eqLogicThumbnailDisplay').show();	
 });
 $('.ambianceAction[data-action=save]').off().on('click',function(){
-	var AmbianceArray= new Object();
-	AmbianceArray.Luminosite= new Array();
-	AmbianceArray.Couleur= new Array();
-	$('#luminotab .SequenceGroup').each(function( index ) {
-		AmbianceArray.Luminosite.push($(this).getValues('.expressionAttr')[0])
-	});
-	var SequenceArray= new Array();
-	$('#colortab .SequenceGroup').each(function( index ) {
-		AmbianceArray.Couleur.push($(this).getValues('.expressionAttr')[0])
-	});
 	$.ajax({
 		type: 'POST',
 		async:true,
@@ -57,7 +47,7 @@ $('.ambianceAction[data-action=save]').off().on('click',function(){
 		data: {
 			action:'save',
 			name:  currentAmbiance,
-			ambiance: JSON.stringify(AmbianceArray)
+			ambiance: getAmbianceValue()
 		},
 		error: function (error) {
 			$('#div_alert').showAlert({message: error.message, level: 'danger'});
@@ -170,6 +160,28 @@ function addSequence(_sequence,_el) {
 	$('.expressionAttr[data-l2key=expression]').off().on('change',function(){
 		$(this).closest('tr').find('td:last').html('');
 		$(this).closest('tr').find('td:last').append(addParameter($(this).val(),$(this).attr('data-l1key')));
+		UpdateSequenceGraph();
+	});
+	$('.expressionAttr[data-l1key=duree]').off().on('change',function(){
+		UpdateSequenceGraph();
+	});
+	$('.expressionAttr[data-l2key=offset]').off().on('change',function(){
+		UpdateSequenceGraph();
+	});
+	$('.expressionAttr[data-l2key=pente]').off().on('change',function(){
+		UpdateSequenceGraph();
+	});
+	$('.expressionAttr[data-l2key=dutty]').off().on('change',function(){
+		UpdateSequenceGraph();
+	});
+	$('.expressionAttr[data-l2key=periode]').off().on('change',function(){
+		UpdateSequenceGraph();
+	});
+	$('.expressionAttr[data-l2key=amplitude]').off().on('change',function(){
+		UpdateSequenceGraph();
+	});
+	$('.expressionAttr[data-l2key=max]').off().on('change',function(){
+		UpdateSequenceGraph();
 	});
 	_el.find('.SeqList .sequences').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
 }
@@ -233,6 +245,19 @@ function addParameter(type,index) {
 	}		
 	return td;
 }
+function getAmbianceValue() {
+	var AmbianceArray= new Object();
+	AmbianceArray.Luminosite= new Array();
+	AmbianceArray.Couleur= new Array();
+	$('#luminotab .SequenceGroup').each(function( index ) {
+		AmbianceArray.Luminosite.push($(this).getValues('.expressionAttr')[0])
+	});
+	var SequenceArray= new Array();
+	$('#colortab .SequenceGroup').each(function( index ) {
+		AmbianceArray.Couleur.push($(this).getValues('.expressionAttr')[0])
+	});
+	return JSON.stringify(AmbianceArray);
+}
 function UpdateSequenceGraph() {
 	$.ajax({
 		type: 'POST',
@@ -240,7 +265,7 @@ function UpdateSequenceGraph() {
 		url: 'plugins/luminotherapie/core/ajax/ambiance.ajax.php',
 		data: {
 			action:'getSimulaitonPoint',
-			name: currentAmbiance
+			Sequences: getAmbianceValue()
 		},
 		dataType: 'json',
 		error: function (request, status, error) {
