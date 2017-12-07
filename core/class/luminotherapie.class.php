@@ -93,7 +93,7 @@ class luminotherapie extends eqLogic {
 				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdSlide->getHumanName());
 			if(is_object($cmdRGB))
 				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
-			$Ambiance=self::Sequences($luminotherapie->getConfiguration('ambiance'));
+			$Ambiance=self::Sequences(json_decode(file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$luminotherapie->getConfiguration('ambiance').'.json'), true));
 			for($time=0;$time<=count($Ambiance['Luminosite']);$time++){
 				if($luminotherapie->getConfiguration('repeat') && $time==count($Ambiance['Luminosite']))
 					   $time=0;
@@ -121,10 +121,9 @@ class luminotherapie extends eqLogic {
        			$luminotherapie->removeSimulAubeDemon();
 		}
 	}
-	public static function Sequences($name) {
-		$ambiance= file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$name.'.json');
+	public static function Sequences($ambiance) {
 		$Value=null;	
-		foreach(json_decode($ambiance, true) as $key => $Sequences){	
+		foreach($ambianc as $key => $Sequences){	
 			if(count($Sequences) >0){
 				$Step=null;
 				foreach($Sequences as $Sequence){
