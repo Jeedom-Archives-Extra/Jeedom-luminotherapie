@@ -21,7 +21,7 @@
 			ajax::success(json_decode($ambiance));
 		}
 		if (init('action') == 'getSimulaitonPoint') {	
-			ajax::success(luminotherapie::Sequences(init('name')));	
+			ajax::success(luminotherapie::Sequences(init('Sequences')));	
 		}
 		throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 		/*     * *********Catch exeption*************** */
