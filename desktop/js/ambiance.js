@@ -154,6 +154,7 @@ function addSequence(_sequence,_el) {
 		.append($('<td>')
 			.append($('<table class="table table-bordered table-condensed">').append(Parameter)));
 	_el.find('.SeqList .sequences').append(Sequences);
+	_el.find('.SeqList .sequences').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
 	$('.sequenceAttr[data-action=remove]').off().on('click',function(){
 		$(this).closest('tr').remove();
 	});
@@ -183,7 +184,6 @@ function addSequence(_sequence,_el) {
 	$('.expressionAttr[data-l2key=max]').off().on('change',function(){
 		UpdateSequenceGraph();
 	});
-	_el.find('.SeqList .sequences').find('.SequenceGroup:last').setValues(_sequence, '.expressionAttr');	
 }
 function addParameter(type,index) {
 	var td=$('<td>');
