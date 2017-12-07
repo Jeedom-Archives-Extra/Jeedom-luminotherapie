@@ -161,12 +161,8 @@ class luminotherapie extends eqLogic {
 					$Sequence['periode']=1;
 				return $Sequence['amplitude'] * sin(2*pi()*$time/$Sequence['periode'])+$Sequence['offset'];
 			case 'carre':
-				//$Sequence['dutty']
-				//$Sequence['periode']
-				$Position = $time - $time / ($Sequence['periode'] * ($Sequence['dutty'] / 100));
-				log::add('luminotherapie','debug',$luminotherapie->getHumanName().' reste : '.$Position.'/'.$time);
-					
-				if($Position > 1)
+				$time=$time-$Sequence['periode']*floor($time/$Sequence['periode']);
+				if($time-$Sequence['periode'] * ($Sequence['dutty'] / 100) >= 0)
 					return $Sequence['offset']+$Sequence['amplitude'];
 			    	else
 				  	return $Sequence['offset'];
