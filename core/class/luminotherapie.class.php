@@ -7,7 +7,7 @@ class luminotherapie extends eqLogic {
 		$return['launchable'] = 'ok';
 		$return['state'] = 'ok';
 		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
-			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
+			$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $luminotherapie->getId()));
 			if(is_object($cron) && !$cron->running())
 				$return['state'] = 'nok';
 		}
@@ -20,7 +20,7 @@ class luminotherapie extends eqLogic {
 		if ($deamon_info['state'] == 'ok') 
 			return;
 		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
-			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
+			$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $luminotherapie->getId()));
 			if(is_object($cron) && !$cron->running()){
 				$cron->start();
 				$cron->run();
@@ -30,7 +30,7 @@ class luminotherapie extends eqLogic {
 	}
 	public static function deamon_stop() {	
 		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
-			$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $luminotherapie->getId()));
+			$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $luminotherapie->getId()));
 			if(is_object($cron)){
 				$cron->stop();
 				$cron->remove();
@@ -60,12 +60,12 @@ class luminotherapie extends eqLogic {
 		$Commande->save();
 		return $Commande;
 	}
-	public function startSimulAubeDemon(){
-		$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $this->getId()));
+	public function startSimulDemon(){
+		$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $this->getId()));
 		if (!is_object($cron)) {
 			$cron = new cron();
 			$cron->setClass('luminotherapie');
-			$cron->setFunction('SimulAubeDemon');
+			$cron->setFunction('SimulDemon');
 			$cron->setDeamon(1);
 			$cron->setOption(array('id' => $this->getId()));
 			$cron->setEnable(1);
@@ -75,18 +75,18 @@ class luminotherapie extends eqLogic {
 		$cron->start();
 		$cron->run();
 	}
-	public function removeSimulAubeDemon(){
-		$cron = cron::byClassAndFunction('luminotherapie', 'SimulAubeDemon',array('id' => $this->getId()));
+	public function removeSimulDemon(){
+		$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $this->getId()));
 		if(is_object($cron)) {
-			log::add('luminotherapie','info',$this->getHumanName().' Fin de la simulation d\'aube');	
+			log::add('luminotherapie','info',$this->getHumanName().' Fin de la simulation');	
 			$cron->stop();
 			$cron->remove();
 		}
 	}
-	public static function SimulAubeDemon($_option){
+	public static function SimulDemon($_option){
 		$luminotherapie=eqLogic::byId($_option['id']);
 		if(is_object($luminotherapie)){
-			log::add('luminotherapie','info',$luminotherapie->getHumanName().' Lancement de la simulation d\'aube');
+			log::add('luminotherapie','info',$luminotherapie->getHumanName().' Lancement de la simulation');
 			$cmdSlide=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorCmd')));
 			$cmdRGB=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorColorCmd')));
 			if(is_object($cmdSlide))
@@ -118,7 +118,7 @@ class luminotherapie extends eqLogic {
 					break;
 				}
 			}
-       			$luminotherapie->removeSimulAubeDemon();
+       			$luminotherapie->removeSimulDemon();
 		}
 	}
 	public static function Sequences($ambiance) {
@@ -249,10 +249,10 @@ class luminotherapieCmd extends cmd {
     public function execute($_options = null) {	
 		switch($this->getLogicalId()){
 			case 'start':
-				$this->getEqLogic()->startSimulAubeDemon();
+				$this->getEqLogic()->startSimulDemon();
 			break;
 			case 'stop':
-				$this->getEqLogic()->removeSimulAubeDemon();
+				$this->getEqLogic()->removeSimulDemon();
 			break;
 				
 		}	
