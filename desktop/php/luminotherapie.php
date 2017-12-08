@@ -244,7 +244,7 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 								</label>
 								<div class="col-sm-5">
 									<label>{{Activer}}</label>
-									<input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="repeat"/>
+									<input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="repeat"/>
 								</div>
 							</div>
 						</fieldset>
