@@ -14,17 +14,14 @@ class luminotherapie extends eqLogic {
 		return $return;
 	}
 	public static function deamon_start($_debug = false) {
+		self::deamon_stop();
 		$deamon_info = self::deamon_info();
 		if ($deamon_info['launchable'] != 'ok') 
 			return;
 		if ($deamon_info['state'] == 'ok') 
 			return;
 		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
-			$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $luminotherapie->getId()));
-			if(is_object($cron) && !$cron->running()){
-				$cron->start();
-				$cron->run();
-			}
+			$luminotherapie->CreateDemon();
 		}
 		
 	}
@@ -60,7 +57,7 @@ class luminotherapie extends eqLogic {
 		$Commande->save();
 		return $Commande;
 	}
-	public function startSimulDemon(){
+	public function CreateDemon(){
 		$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $this->getId()));
 		if (!is_object($cron)) {
 			$cron = new cron();
@@ -75,50 +72,48 @@ class luminotherapie extends eqLogic {
 		$cron->start();
 		$cron->run();
 	}
-	public function removeSimulDemon(){
-		$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $this->getId()));
-		if(is_object($cron)) {
-			log::add('luminotherapie','info',$this->getHumanName().' Fin de la simulation');	
-			$cron->stop();
-			$cron->remove();
-		}
-	}
 	public static function SimulDemon($_option){
 		$luminotherapie=eqLogic::byId($_option['id']);
 		if(is_object($luminotherapie)){
-			log::add('luminotherapie','info',$luminotherapie->getHumanName().' Lancement de la simulation');
-			$cmdSlide=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorCmd')));
-			$cmdRGB=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorColorCmd')));
-			if(is_object($cmdSlide))
-				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdSlide->getHumanName());
-			if(is_object($cmdRGB))
-				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
-			$Ambiance=self::Sequences(json_decode(file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$luminotherapie->getConfiguration('ambiance').'.json'), true));
-			for($time=0;$time<=count($Ambiance['Luminosite']);$time++){
-				if($luminotherapie->getConfiguration('repeat') && $time==count($Ambiance['Luminosite']))
-					   $time=0;
-				if($time==count($Ambiance['Luminosite']))
+			while(true){
+				$cache = cache::byKey('luminotherapie::'.$luminotherapie->getId());
+				if(is_object($cache) && $cache->getValue(false))
 					continue;
-				if(is_object($cmdSlide)){
-					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$Ambiance['Luminosite'][$time]);
-					$cmdSlide->execCmd(array('slider'=>$Ambiance['Luminosite'][$time]));
+				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Lancement de la simulation');
+				$cmdSlide=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorCmd')));
+				$cmdRGB=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorColorCmd')));
+				if(is_object($cmdSlide))
+					log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdSlide->getHumanName());
+				if(is_object($cmdRGB))
+					log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
+				$Ambiance=self::Sequences(json_decode(file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$luminotherapie->getConfiguration('ambiance').'.json'), true));
+				for($time=0;$time<=count($Ambiance['Luminosite']);$time++){
+					if($luminotherapie->getConfiguration('repeat') && $time==count($Ambiance['Luminosite']))
+						   $time=0;
+					if($time==count($Ambiance['Luminosite']))
+						continue;
+					if(is_object($cmdSlide)){
+						log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$Ambiance['Luminosite'][$time]);
+						$cmdSlide->execCmd(array('slider'=>$Ambiance['Luminosite'][$time]));
+					}
+					if(is_object($cmdRGB)){
+						log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$Ambiance['Couleur'][$time]);
+						$cmdRGB->execCmd(array('color'=>$Ambiance['Couleur'][$time]));
+					}
+					switch($luminotherapie->getConfiguration('temps')){
+						case 'sec':
+						break;
+						case 'min':
+							sleep(60);
+						break;
+						case 'heure':
+							sleep(60*60);
+						break;
+					}
 				}
-				if(is_object($cmdRGB)){
-					log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$Ambiance['Couleur'][$time]);
-					$cmdRGB->execCmd(array('color'=>$Ambiance['Couleur'][$time]));
-				}
-				switch($luminotherapie->getConfiguration('temps')){
-					case 'sec':
-					break;
-					case 'min':
-						sleep(60);
-					break;
-					case 'heure':
-						sleep(60*60);
-					break;
-				}
+				log::add('luminotherapie','info',$this->getHumanName().' Fin de la simulation');
+				cache::set('luminotherapie::'.$luminotherapie->getId(), false, 0);
 			}
-       			$luminotherapie->removeSimulDemon();
 		}
 	}
 	public static function Sequences($ambiance) {
@@ -249,10 +244,10 @@ class luminotherapieCmd extends cmd {
     public function execute($_options = null) {	
 		switch($this->getLogicalId()){
 			case 'start':
-				$this->getEqLogic()->startSimulDemon();
+				cache::set('luminotherapie::'.$this->getEqLogic()->getId(), true, 0);
 			break;
 			case 'stop':
-				$this->getEqLogic()->removeSimulDemon();
+				cache::set('luminotherapie::'.$this->getEqLogic()->getId(), false, 0);
 			break;
 				
 		}	
