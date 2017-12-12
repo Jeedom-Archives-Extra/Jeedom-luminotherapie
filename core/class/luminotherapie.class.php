@@ -8,7 +8,7 @@ class luminotherapie extends eqLogic {
 		$return['state'] = 'ok';
 		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
 			$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $luminotherapie->getId()));
-			if(is_object($cron) && !$cron->running())
+			if(!is_object($cron) && !$cron->running())
 				$return['state'] = 'nok';
 		}
 		return $return;
