@@ -5,11 +5,11 @@ class luminotherapie extends eqLogic {
 		$return = array();
 		$return['log'] = 'luminotherapie';
 		$return['launchable'] = 'ok';
-		$return['state'] = 'ok';
+		$return['state'] = 'nok';
 		foreach(eqLogic::byType('luminotherapie') as $luminotherapie){
 			$cron = cron::byClassAndFunction('luminotherapie', 'SimulDemon',array('id' => $luminotherapie->getId()));
-			if(!is_object($cron) && !$cron->running())
-				$return['state'] = 'nok';
+			if(is_object($cron) && $cron->running())
+				$return['state'] = 'ok';
 		}
 		return $return;
 	}
