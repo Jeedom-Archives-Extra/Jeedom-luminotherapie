@@ -78,42 +78,44 @@ class luminotherapie extends eqLogic {
 		if(is_object($luminotherapie)){
 			while(true){
 				$cache = cache::byKey('luminotherapie::'.$luminotherapie->getId());
-				if(is_object($cache) && $cache->getValue(false))
-					continue;
-				log::add('luminotherapie','info',$luminotherapie->getHumanName().' Lancement de la simulation');
-				$cmdSlide=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorCmd')));
-				$cmdRGB=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorColorCmd')));
-				if(is_object($cmdSlide))
-					log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdSlide->getHumanName());
-				if(is_object($cmdRGB))
-					log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
-				$Ambiance=self::Sequences(json_decode(file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$luminotherapie->getConfiguration('ambiance').'.json'), true));
-				for($time=0;$time<=count($Ambiance['Luminosite']);$time++){
-					if($luminotherapie->getConfiguration('repeat') && $time==count($Ambiance['Luminosite']))
-						   $time=0;
-					if($time==count($Ambiance['Luminosite']))
-						continue;
-					if(is_object($cmdSlide)){
-						log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$Ambiance['Luminosite'][$time]);
-						$cmdSlide->execCmd(array('slider'=>$Ambiance['Luminosite'][$time]));
+				if(is_object($cache) && $cache->getValue(false)){
+					log::add('luminotherapie','info',$luminotherapie->getHumanName().' Lancement de la simulation');
+					$cmdSlide=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorCmd')));
+					$cmdRGB=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorColorCmd')));
+					if(is_object($cmdSlide))
+						log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdSlide->getHumanName());
+					if(is_object($cmdRGB))
+						log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
+					$Ambiance=self::Sequences(json_decode(file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$luminotherapie->getConfiguration('ambiance').'.json'), true));
+					for($time=0;$time<=count($Ambiance['Luminosite']);$time++){
+						if(!$cache->getValue(false))
+							break;
+						if($luminotherapie->getConfiguration('repeat') && $time==count($Ambiance['Luminosite']))
+							   $time=0;
+						if($time==count($Ambiance['Luminosite']))
+							continue;
+						if(is_object($cmdSlide)){
+							log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de l\'intensité lumineuse : ' .$Ambiance['Luminosite'][$time]);
+							$cmdSlide->execCmd(array('slider'=>$Ambiance['Luminosite'][$time]));
+						}
+						if(is_object($cmdRGB)){
+							log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$Ambiance['Couleur'][$time]);
+							$cmdRGB->execCmd(array('color'=>$Ambiance['Couleur'][$time]));
+						}
+						switch($luminotherapie->getConfiguration('temps')){
+							case 'sec':
+							break;
+							case 'min':
+								sleep(60);
+							break;
+							case 'heure':
+								sleep(60*60);
+							break;
+						}
 					}
-					if(is_object($cmdRGB)){
-						log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$Ambiance['Couleur'][$time]);
-						$cmdRGB->execCmd(array('color'=>$Ambiance['Couleur'][$time]));
-					}
-					switch($luminotherapie->getConfiguration('temps')){
-						case 'sec':
-						break;
-						case 'min':
-							sleep(60);
-						break;
-						case 'heure':
-							sleep(60*60);
-						break;
-					}
+					log::add('luminotherapie','info',$luminotherapie->getHumanName().' Fin de la simulation');
+					cache::set('luminotherapie::'.$luminotherapie->getId(), false, 0);
 				}
-				log::add('luminotherapie','info',$this->getHumanName().' Fin de la simulation');
-				cache::set('luminotherapie::'.$luminotherapie->getId(), false, 0);
 			}
 		}
 	}
