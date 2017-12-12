@@ -37,6 +37,7 @@ class luminotherapie extends eqLogic {
 	public function postSave() {
 		$this->AddCommande('Démarrage','start',"action", 'other',1);
 		$this->AddCommande('Arret','stop',"action", 'other',1);
+		$this->CreateDemon();
 		
 	}
 	public function AddCommande($Name,$_logicalId,$Type="info", $SubType='binary',$visible,$Template='') {
