@@ -116,6 +116,7 @@ class luminotherapie extends eqLogic {
 					log::add('luminotherapie','info',$luminotherapie->getHumanName().' Fin de la simulation');
 					cache::set('luminotherapie::'.$luminotherapie->getId(), false, 0);
 				}
+				sleep(10);
 			}
 		}
 	}
