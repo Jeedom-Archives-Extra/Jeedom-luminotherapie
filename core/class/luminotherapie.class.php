@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+include_file('3rdparty', 'rgb_hsl_converter.inc', 'php', 'luminotherapie');
 class luminotherapie extends eqLogic {
 	public static function deamon_info() {
 		$return = array();
