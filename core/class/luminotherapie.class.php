@@ -88,7 +88,8 @@ class luminotherapie extends eqLogic {
 						log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
 					$Ambiance=self::Sequences(json_decode(file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$luminotherapie->getConfiguration('ambiance').'.json'), true));
 					for($time=0;$time<=count($Ambiance['Luminosite']);$time++){
-						if(!$cache->getValue(false))
+						$cache = cache::byKey('luminotherapie::'.$luminotherapie->getId());
+						if(!is_object($cache) || !$cache->getValue(false)){
 							break;
 						if($luminotherapie->getConfiguration('repeat') && $time==count($Ambiance['Luminosite']))
 							   $time=0;
@@ -102,6 +103,9 @@ class luminotherapie extends eqLogic {
 							log::add('luminotherapie','debug',$luminotherapie->getHumanName().' Valeur de la couleur : ' .$Ambiance['Couleur'][$time]);
 							$cmdRGB->execCmd(array('color'=>$Ambiance['Couleur'][$time]));
 						}
+						$cache = cache::byKey('luminotherapie::'.$luminotherapie->getId());
+						if(!is_object($cache) || !$cache->getValue(false)){
+							break;
 						switch($luminotherapie->getConfiguration('temps')){
 							case 'sec':
 							break;
