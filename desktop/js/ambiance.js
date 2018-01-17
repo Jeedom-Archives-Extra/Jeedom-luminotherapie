@@ -107,10 +107,14 @@ $('.ambianceAction[data-action=copy]').off().on('click',function(){
 	});
 });
 $('.sequenceAttr[data-action=add]').off().on('click',function(){
-  if($(this).closest('.tab-pane').attr('id') == 'luminotab')
+  if($(this).closest('.tab-pane').attr('id') == 'luminotab'){
 	addSequence({lum:{}}, $(this).closest('.tab-pane'));
-  else
-	addSequence({R:{},G:{},B:{}}, $(this).closest('.tab-pane'));
+  }else{
+	  if($('.ConfigurationAttr[data-l1key=Couleur][data-l2key=hsl]').is(':checked'))
+		addSequence({Hue:{},Saturation:{},Lightness:{}}, $(this).closest('.tab-pane'));
+	  else
+		addSequence({R:{},G:{},B:{}}, $(this).closest('.tab-pane'));
+  }
 });
 function addSequence(_sequence,_el) {
 	var Parameter=$('<tbody>');
