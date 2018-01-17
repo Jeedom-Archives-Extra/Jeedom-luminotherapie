@@ -336,6 +336,18 @@ $ambiances=ls(dirname(__FILE__) . '/../../core/config/ambiance', '*');
 								<i class="fa fa-plus-circle"></i>
 								{{Ajouter une séquence}}
 							</a>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" >
+									{{Gestion de la couleur}}
+									<sup>
+										<i class="fa fa-question-circle tooltips" title="Si actif, la couleur sera gere par HSL, autrement par RGB" style="font-size : 1em;color:grey;"></i>
+									</sup>
+								</label>
+								<div class="col-sm-5">
+									<label>{{Activer}}</label>
+									<input type="checkbox" class="ConfigurationAttr" data-label-text="{{Activer}}" data-l1key="Couleur" data-l2key="hsl"/>
+								</div>
+							</div>
 						</legend>
 					</fieldset>
 				</form>		
