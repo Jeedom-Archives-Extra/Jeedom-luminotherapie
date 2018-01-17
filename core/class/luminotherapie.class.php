@@ -138,14 +138,21 @@ class luminotherapie extends eqLogic {
 								$time=0;
 							$Value[$key][]= ceil(self::equation($Sequence['duree'],$Sequence['lum'], $time, end($Value)));
 						}
-					}else{
+					}elseif($key == 'Couleur'){
 						for($time=1; $time <= $Sequence['duree'];$time++){
 							if(count($Value[$key])==0)
 								$time=0;
-							$R= ceil(self::equation($Sequence['duree'],$Sequence['R'], $time, end($Value)));
-							$G= ceil(self::equation($Sequence['duree'],$Sequence['G'], $time, end($Value)));
-							$B= ceil(self::equation($Sequence['duree'],$Sequence['B'], $time, end($Value)));
-							$Value[$key][]=self::rgb2html($R, $G, $B);
+							if($ambiance['Configuration']['Couleur']['hsl']){
+								$Hue= ceil(self::equation($Sequence['duree'],$Sequence['Hue'], $time, end($Value)));
+								$Lightness= ceil(self::equation($Sequence['duree'],$Sequence['Lightness'], $time, end($Value)));
+								$Saturation= ceil(self::equation($Sequence['duree'],$Sequence['Saturation'], $time, end($Value)));
+								$Value[$key][]=self::hsl2html(array($Hue,$Lightness,$Saturation));
+							}else{
+								$R= ceil(self::equation($Sequence['duree'],$Sequence['R'], $time, end($Value)));
+								$G= ceil(self::equation($Sequence['duree'],$Sequence['G'], $time, end($Value)));
+								$B= ceil(self::equation($Sequence['duree'],$Sequence['B'], $time, end($Value)));
+								$Value[$key][]=self::rgb2html($R, $G, $B);
+							}
 						}
 					}
 				}
@@ -214,6 +221,42 @@ class luminotherapie extends eqLogic {
 				else
 					return $Sequence['max'] * 1.001 * (-pow(2, -10 * $time / $Duree) + 1) + $Sequence['offset'];
 		}
+	}
+	private static function hsl2rgb($hsl) {
+		list($h, $s, $l) = $hsl;
+		if ($s == 0 ) 
+			$rgb = array($l, $l, $l);
+		else{
+			$chroma = (1 - abs(2*$l - 1)) * $s;
+			$h_     = $h * 6;
+			$x         = $chroma * (1 - abs((fmod($h_,2)) - 1));
+			$m = $l - round($chroma/2, 10);
+			if($h_ >= 0 && $h_ < 1) 
+				$rgb = array(($chroma + $m), ($x + $m), $m);
+			else if($h_ >= 1 && $h_ < 2) 
+				$rgb = array(($x + $m), ($chroma + $m), $m);
+			else if($h_ >= 2 && $h_ < 3) 
+				$rgb = array($m, ($chroma + $m), ($x + $m));
+			else if($h_ >= 3 && $h_ < 4) 
+				$rgb = array($m, ($x + $m), ($chroma + $m));
+			else if($h_ >= 4 && $h_ < 5)
+				$rgb = array(($x + $m), $m, ($chroma + $m));
+			else if($h_ >= 5 && $h_ < 6) 
+				$rgb = array(($chroma + $m), $m, ($x + $m)); 
+		}
+
+		return $rgb;
+	}
+	private static function rgb2html($rgb) {
+		list($r,$g,$b) = $rgb;
+		$r = round(255 * $r);
+		$g = round(255 * $g);
+		$b = round(255 * $b);
+		return "#".sprintf("%02X",$r).sprintf("%02X",$g).sprintf("%02X",$b);
+	}
+	private static function hsl2html($hsl) {
+		$rgb = self::hsl2rgb($hsl);
+		return self::rgb2html($rgb);
 	}
 	private static function html2rgb($color){
 		if ($color[0] == '#')
