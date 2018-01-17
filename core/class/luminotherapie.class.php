@@ -223,29 +223,71 @@ class luminotherapie extends eqLogic {
 		}
 	}
 	private static function hsl2rgb($hsl) {
+      	log::add('luminotherapie','info',json_encode($hsl));
 		list($h, $s, $l) = $hsl;
-		if ($s == 0 ) 
-			$rgb = array($l, $l, $l);
-		else{
-			$chroma = (1 - abs(2*$l - 1)) * $s;
-			$h_     = $h * 6;
-			$x         = $chroma * (1 - abs((fmod($h_,2)) - 1));
-			$m = $l - round($chroma/2, 10);
-			if($h_ >= 0 && $h_ < 1) 
-				$rgb = array(($chroma + $m), ($x + $m), $m);
-			else if($h_ >= 1 && $h_ < 2) 
-				$rgb = array(($x + $m), ($chroma + $m), $m);
-			else if($h_ >= 2 && $h_ < 3) 
-				$rgb = array($m, ($chroma + $m), ($x + $m));
-			else if($h_ >= 3 && $h_ < 4) 
-				$rgb = array($m, ($x + $m), ($chroma + $m));
-			else if($h_ >= 4 && $h_ < 5)
-				$rgb = array(($x + $m), $m, ($chroma + $m));
-			else if($h_ >= 5 && $h_ < 6) 
-				$rgb = array(($chroma + $m), $m, ($x + $m)); 
-		}
+		$h /= 360;
+		$s /=100;
+		$l /=100;
 
-		return $rgb;
+		$r = $l;
+		$g = $l;
+		$b = $l;
+		$v = ($l <= 0.5) ? ($l * (1.0 + $s)) : ($l + $s - $l * $s);
+		if ($v > 0){
+			$m;
+			$sv;
+			$sextant;
+			$fract;
+			$vsf;
+			$mid1;
+			$mid2;
+
+			$m = $l + $l - $v;
+			$sv = ($v - $m ) / $v;
+			$h *= 6.0;
+			$sextant = floor($h);
+			$fract = $h - $sextant;
+			$vsf = $v * $sv * $fract;
+			$mid1 = $m + $vsf;
+			$mid2 = $v - $vsf;
+
+			switch ($sextant){
+				case 0:
+					$r = $v;
+					$g = $mid1;
+					$b = $m;
+				break;
+				case 1:
+					$r = $mid2;
+					$g = $v;
+					$b = $m;
+				break;
+				case 2:
+					$r = $m;
+					$g = $v;
+					$b = $mid1;
+				break;
+				case 3:
+					$r = $m;
+					$g = $mid2;
+					$b = $v;
+				break;
+				case 4:
+					$r = $mid1;
+					$g = $m;
+					$b = $v;
+				break;
+				case 5:
+					$r = $v;
+					$g = $m;
+					$b = $mid2;
+				break;
+			}
+		}
+		$r = round($r * 255, 0);
+		$g = round($g * 255, 0);
+		$b = round($b * 255, 0);
+		return array($r,$g,$b);
 	}
 	private static function hsl2html($hsl) {
 		$rgb = self::hsl2rgb($hsl);
