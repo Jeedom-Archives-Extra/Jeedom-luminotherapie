@@ -146,7 +146,7 @@ class luminotherapie extends eqLogic {
 								$Hue= ceil(self::equation($Sequence['duree'],$Sequence['Hue'], $time, end($Value)));
 								$Lightness= ceil(self::equation($Sequence['duree'],$Sequence['Lightness'], $time, end($Value)));
 								$Saturation= ceil(self::equation($Sequence['duree'],$Sequence['Saturation'], $time, end($Value)));
-								$Value[$key][]=self::hsl2html(array($Hue,$Lightness,$Saturation));
+								$Value[$key][]=self::hsl2html(array($Hue,$Saturation,$Lightness));
 							}else{
 								$R= ceil(self::equation($Sequence['duree'],$Sequence['R'], $time, end($Value)));
 								$G= ceil(self::equation($Sequence['duree'],$Sequence['G'], $time, end($Value)));
