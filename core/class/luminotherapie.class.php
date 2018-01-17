@@ -247,13 +247,6 @@ class luminotherapie extends eqLogic {
 
 		return $rgb;
 	}
-	private static function rgb2html($rgb) {
-		list($r,$g,$b) = $rgb;
-		$r = round(255 * $r);
-		$g = round(255 * $g);
-		$b = round(255 * $b);
-		return "#".sprintf("%02X",$r).sprintf("%02X",$g).sprintf("%02X",$b);
-	}
 	private static function hsl2html($hsl) {
 		$rgb = self::hsl2rgb($hsl);
 		return self::rgb2html($rgb);
