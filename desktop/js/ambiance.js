@@ -252,7 +252,7 @@ function getAmbianceValue() {
 	AmbianceArray.Configuration= new Array();
 	AmbianceArray.Luminosite= new Array();
 	AmbianceArray.Couleur= new Array();
-	AmbianceArray.Configuration=$('body').getValues('.ConfigurationAttr');
+	AmbianceArray.Configuration=$('body').getValues('.ConfigurationAttr')[0];
 	$('#luminotab .SequenceGroup').each(function( index ) {
 		AmbianceArray.Luminosite.push($(this).getValues('.expressionAttr')[0]);
 	});
