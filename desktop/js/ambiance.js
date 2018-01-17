@@ -22,6 +22,7 @@ $('.ambianceDisplayCard').off().on('click',function(){
 			$('.ambiance').show();
 			$('.SequenceGroup').remove();
 			if (typeof(data.result) != 'undefined') {
+				$('body').setValues(data.result.Configuration, '.ConfigurationAttr');	
 				for(var index in data.result.Luminosite) { 
 					if( (typeof data.result.Luminosite[index] === "object") && (data.result.Luminosite[index] !== null) )
 						addSequence(data.result.Luminosite[index],$('#luminotab'));
@@ -248,14 +249,16 @@ function addParameter(type,index) {
 }
 function getAmbianceValue() {
 	var AmbianceArray= new Object();
+	AmbianceArray.Configuration= new Array();
 	AmbianceArray.Luminosite= new Array();
 	AmbianceArray.Couleur= new Array();
+	AmbianceArray.Configuration=$('body').getValues('.ConfigurationAttr');
 	$('#luminotab .SequenceGroup').each(function( index ) {
-		AmbianceArray.Luminosite.push($(this).getValues('.expressionAttr')[0])
+		AmbianceArray.Luminosite.push($(this).getValues('.expressionAttr')[0]);
 	});
 	var SequenceArray= new Array();
 	$('#colortab .SequenceGroup').each(function( index ) {
-		AmbianceArray.Couleur.push($(this).getValues('.expressionAttr')[0])
+		AmbianceArray.Couleur.push($(this).getValues('.expressionAttr')[0]);
 	});
 	return JSON.stringify(AmbianceArray);
 }
