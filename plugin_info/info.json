@@ -7,6 +7,6 @@
 	"category" : "wellness",
 	"hasOwnDeamon" : true,
 	"issue" : "https://github.com/mika-nt28/Jeedom-luminotherapie/issues",
- 	"changelog" : "https://github.com/mika-nt28/Jeedom-luminotherapie/commits/master",
+ 	"changelog" : "https://github.com/mika-nt28/Jeedom-luminotherapie/commits/stable",
  	"documentation" : "https://jeedom.github.io/documentation/third_plugin/luminotherapie/fr_FR/index.html"
 }
