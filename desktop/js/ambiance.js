@@ -80,8 +80,6 @@ $('.ambianceAction[data-action=remove]').on('click', function () {
 							url += i + '=' + vars[i].replace('#', '') + '&';
 						}
 					}
-					modifyWithoutSave = false;
-					url += 'id=' + _data.id + '&saveSuccessFull=1';
 					loadPage(url);
 				}
 			});
