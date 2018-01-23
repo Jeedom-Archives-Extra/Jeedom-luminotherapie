@@ -37,8 +37,9 @@ class luminotherapie extends eqLogic {
 	public function postSave() {
 		$this->AddCommande('Démarrage','start',"action", 'other',1);
 		$this->AddCommande('Arret','stop',"action", 'other',1);
+		$this->AddCommande('Simulation en cours','startSimu',"info", 'binary',1);
+		$this->AddCommande('Temps de simulation ecoulé','tpsSimu',"info", 'numeric',1);
 		$this->CreateDemon();
-		
 	}
 	public function AddCommande($Name,$_logicalId,$Type="info", $SubType='binary',$visible,$Template='') {
 		$Commande = $this->getCmd(null,$_logicalId);
@@ -79,6 +80,7 @@ class luminotherapie extends eqLogic {
 			while(true){
 				$cache = cache::byKey('luminotherapie::'.$luminotherapie->getId());
 				if(is_object($cache) && $cache->getValue(false)){
+					$luminotherapie->checkAndUpdateCmd('startSimu',1);
 					log::add('luminotherapie','info',$luminotherapie->getHumanName().' Lancement de la simulation');
 					$cmdSlide=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorCmd')));
 					$cmdRGB=cmd::byId(str_replace('#','',$luminotherapie->getConfiguration('DawnSimulatorColorCmd')));
@@ -88,6 +90,7 @@ class luminotherapie extends eqLogic {
 						log::add('luminotherapie','info',$luminotherapie->getHumanName().' Mise a jours automatique de '.$cmdRGB->getHumanName());
 					$Ambiance=self::Sequences(json_decode(file_get_contents(dirname(__FILE__) . '/../../core/config/ambiance/'.$luminotherapie->getConfiguration('ambiance').'.json'), true));
 					for($time=0;$time<=count($Ambiance['Luminosite']);$time++){
+						$luminotherapie->checkAndUpdateCmd('tpsSimu',$time);
 						$cache = cache::byKey('luminotherapie::'.$luminotherapie->getId());
 						if(!is_object($cache) || !$cache->getValue(false))
 							break;
@@ -121,6 +124,8 @@ class luminotherapie extends eqLogic {
 					log::add('luminotherapie','info',$luminotherapie->getHumanName().' Fin de la simulation');
 					cache::set('luminotherapie::'.$luminotherapie->getId(), false, 0);
 				}
+				$luminotherapie->checkAndUpdateCmd('tpsSimu',0);
+				$luminotherapie->checkAndUpdateCmd('startSimu',0);
 				sleep(config::byKey('waitDemon','luminotherapie'));
 			}
 		}
