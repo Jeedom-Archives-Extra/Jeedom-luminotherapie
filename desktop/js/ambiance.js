@@ -250,7 +250,10 @@ function addParameter(type,index) {
 	return td;
 }
 function getAmbianceValue() {
-	var AmbianceArray= new Object();
+	if (typeof(AmbianceArray) != "undefined") 
+		var AmbianceArray= new Object();
+	else
+		AmbianceArray=null;
 	AmbianceArray.Configuration= new Array();
 	AmbianceArray.Luminosite= new Array();
 	AmbianceArray.Couleur= new Array();
