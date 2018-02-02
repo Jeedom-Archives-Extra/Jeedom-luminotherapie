@@ -2,8 +2,7 @@
 
 == Description
 Ce plugin permet de créer des ambiances lumineuse
-
-image::../images/luminotherapie_screenshot_Configuration.jpg[]
+![introduction01](../images/luminotherapie_screenshot_Configuration.jpg)
 
 === Crée une ambiance lumineuse
 Par defaut, le plugin propose des ambiances pré-configurer, il est deconseiller de les modifier car elles seront mise a jours en meme temps que le plugin.
@@ -15,7 +14,7 @@ On vas retrouver sur cette page 2 onglets pour le paramettrage de le luminosité
 
 En cliquant sur le bouton "Ajouter une séquence" nous allons pouvoir imbriquer plusieurs forme élémentaire afin de fabriquer notre sigal
 
-image::../images/luminotherapie_screenshot_ConfigurationAmbianceLum.jpg[]
+![introduction02](../images/luminotherapie_screenshot_ConfigurationAmbianceLum.jpg)
 
 On remarquera une représentation graphique de notre simulation pour facilité la creation
 
@@ -23,14 +22,14 @@ On remarquera une représentation graphique de notre simulation pour facilité l
 
 C'est le meme principe que pour la variation lumineuse, on vas imbriquer plusieurs forme élémentaire afin de fabriquer notre couleur et pour chaque couleur elementaire
 
-image::../images/luminotherapie_screenshot_ConfigurationAmbianceCouleur.jpg[]
+![introduction03](../images/luminotherapie_screenshot_ConfigurationAmbianceCouleur.jpg)
 
 On remarquera une représentation graphique de notre simulation pour facilité la creation
 
 === Configuration d'une simulation
 Nous pouvons maintenant cree notre simulation 
 
-image::../images/ConfigurationGeneral.jpg[] 
+![introduction04](../images/ConfigurationGeneral.jpg)
 
 * Nom  : le nom a déjà été paramétré, mais vous avez la possibilité de le changer.      
 * Objet parent : ce paramètre permet d'ajouter l'équipement dans un objet Jeedom.       
