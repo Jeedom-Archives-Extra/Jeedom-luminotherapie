@@ -225,8 +225,7 @@ function addParameter(type,index) {
 				.append($('<div class="col-md-8 input-group">')
 					.append($('<input type="text" class="expressionAttr form-control" data-l1key="'+index+'" data-l2key="periode" placeholder="Saisissez la frequence de votre sinusoide">'))));
 			td.append($('<div class="form-group">')
-				.append($('<label class="col-sm-2 control-label">')
-					.append('{{Amplitude}}')
+				.append($('<label class="col-sm-2 control-label">')					.append('{{Amplitude}}')
 					.append($('<sup>')
 						.append($('<i class="fa fa-question-circle tooltips" title="Saisissez l\'amplitude de votre segement">'))))
 				.append($('<div class="col-md-8 input-group">')
@@ -250,7 +249,7 @@ function addParameter(type,index) {
 	return td;
 }
 function getAmbianceValue() {
-	if (typeof(AmbianceArray) != "undefined") 
+	if (typeof(AmbianceArray) == "undefined") 
 		var AmbianceArray= new Object();
 	else
 		AmbianceArray=null;
